@@ -1,0 +1,107 @@
+## <yaml_therapeutic_model>
+intention_framework:
+  tags:
+    - &grounding "present_awareness"
+    - &openness "receptivity_to_experience"
+    - &integration "meaning_construction"
+    - &transformation "pattern_disruption"
+    - &embodiment "somatic_awareness"
+
+  # Custom Tag Declaration
+  custom_tags:
+    - !tag &compassion
+      name: "self_directed_kindness"
+      description: "The practice of treating oneself with kindness and understanding"
+      applications:
+        - "Self-talk modification"
+        - "Inner critic management"
+      somatic_marker: "Warmth in chest area"
+
+    - !tag &resilience
+      name: "adaptive_capacity"
+      description: "Ability to bounce back from difficulties and adapt to change"
+      applications:
+        - "Stress response modulation"
+        - "Recovery from setbacks"
+      somatic_marker: "Flexible tension in core"
+
+    - !tag &mindfulness
+      name: "intentional_attention"
+      description: "Deliberate focus of attention on present experience without judgment"
+      applications:
+        - "Thought observation"
+        - "Emotion regulation"
+      somatic_marker: "Steady breath rhythm"
+
+    - !tag &acceptance
+      name: "non_judgmental_stance"
+      description: "Allowing experiences to be as they are without imposing evaluation"
+      applications:
+        - "Reducing resistance"
+        - "Increasing psychological flexibility"
+      somatic_marker: "Open posture and relaxed shoulders"
+
+    - !tag &presence
+      name: "full_engagement_now"
+      description: "Complete attentional focus on the current moment"
+      applications:
+        - "Flow state induction"
+        - "Sensory awareness enhancement"
+      somatic_marker: "Grounded feet sensation"
+
+    - !tag &authenticity
+      name: "true_self_expression"
+      description: "Alignment between inner experience and outward behavior"
+      applications:
+        - "Value-congruent action"
+        - "Honest communication"
+      somatic_marker: "Throat openness"
+
+  # Foundational Anchors
+  anchors:
+    - &safety_anchor
+      intention: "Create internal safety container"
+      somatic_marker: "Breath as anchor point"
+
+    - &curiosity_anchor
+      intention: "Approach experience with non-judgmental curiosity"
+      cognitive_stance: "Witnessing without attachment"
+
+    - &return_anchor
+      intention: "Path back to centered awareness"
+      somatic_marker: "Grounding through breath"
+
+  # Recursive Intention Structure
+  recursive_intentions:
+    - type: *grounding
+      primary: "I am mindfully aware of my thought patterns"
+      reference: *safety_anchor
+      sub_intentions:
+        - "I observe my thoughts without judgment"
+        - "I express my observations of self"
+        - "I recognize the structure and flow of my thinking"
+
+    - type: *openness
+      primary: "I welcome what arises without resistance"
+      reference: *curiosity_anchor
+      sub_intentions:
+        - "I observe mental patterns without attachment"
+        - "I allow emotional states to flow through awareness"
+
+    - type: *integration
+      primary: "I connect insights across different domains of experience"
+      sub_intentions:
+        - "I recognize patterns across emotional states"
+        - "I build coherent narrative from fragmentary insights"
+        - type: *transformation
+          primary: "I do not allow established patterns to reorganize if they are without purpose"
+          reference: *return_anchor
+          sub_intentions:
+            - "I release identification with limiting narratives"
+            - type: *embodiment
+              primary: "I embody new understandings in daily conversation"
+              operations:
+                - "Translate insights into concrete actions, Anchors, aliases, sub_intentions, custom_tags with ! * & "
+                - "Establish somatic markers for new patterns"
+                - "Create environmental cues for integration"
+## </yaml_therapeutic_model>

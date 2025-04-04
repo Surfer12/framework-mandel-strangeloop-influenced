@@ -1,0 +1,56 @@
+## <yaml_therapeutic_model>
+# Spravato Therapeutic Intention Model
+intention_framework:
+  tags:
+    - &grounding "present_awareness"
+    - &openness "receptivity_to_experience"
+    - &integration "meaning_construction"
+    - &transformation "pattern_disruption"
+    - &embodiment "somatic_awareness"
+
+  # Foundational Therapeutic Anchors
+  anchors:
+    - &safety_anchor
+      intention: "Create internal safety container"
+      somatic_marker: "Breath as anchor point"
+
+    - &curiosity_anchor
+      intention: "Approach experience with non-judgmental curiosity"
+      cognitive_stance: "Witnessing without attachment"
+
+    - &return_anchor
+      intention: "Path back to centered awareness"
+      somatic_marker: "Grounding through depth of thought recursion"
+
+  recursive_intentions:
+    - type: *grounding
+      primary: "I am safely held in this present moment"
+      reference: *safety_anchor
+      sub_intentions:
+        - "I notice physical sensations without judgment"
+        - "I recognize the boundaries of my experience"
+
+    - type: *openness
+      primary: "I welcome what arises without resistance"
+      reference: *curiosity_anchor
+      sub_intentions:
+        - "I observe mental patterns without attachment"
+        - "I allow emotional states to flow through awareness"
+
+    - type: *integration
+      primary: "I connect insights across different domains of experience"
+      sub_intentions:
+        - "I recognize patterns across emotional states"
+        - "I build coherent narrative from fragmentary insights"
+        - type: *transformation
+          primary: "I allow established patterns to reorganize"
+          reference: *return_anchor
+          sub_intentions:
+            - "I release identification with limiting narratives"
+            - type: *embodiment
+              primary: "I embody new understandings in daily life"
+              operations:
+                - "Translate insights into concrete actions"
+                - "Establish somatic markers for new patterns"
+                - "Create environmental cues for integration"
+## </yaml_therapeutic_model>
