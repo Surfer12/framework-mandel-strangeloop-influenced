@@ -821,4 +821,4 @@ impl CognitiveAnthropicManager {
             system: Some("You are operating as a reflective layer in a cognitive framework. Analyze the process and outputs of previous cognitive layers to generate meta-insights.".to_string()),
         };
 
-        let response = self.api_client.create_message(parameters).
+        let response = self.api_client.create_message(parameters).await?;
