@@ -117,13 +117,13 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
         fullWidth
         maxWidth="md"
       >
-        <DialogTitle sx={{ backgroundColor: "#222", color: currentType.color }}>
+        <DialogTitle sx={{ backgroundColor: "#fff", color: currentType.color }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <CurrentIcon /> {currentType.label}
           </Box>
         </DialogTitle>
         
-        <DialogContent sx={{ backgroundColor: "#222", pt: 2 }}>
+        <DialogContent sx={{ backgroundColor: "#fff", pt: 2 }}>
           <DialogContentText sx={{ color: 'text.secondary', mb: 3 }}>
             {currentType.description}
           </DialogContentText>
@@ -197,7 +197,7 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
           </FormControl>
         </DialogContent>
         
-        <DialogActions sx={{ backgroundColor: "#222", p: 2 }}>
+        <DialogActions sx={{ backgroundColor: "#fff", p: 2 }}>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button 
             variant="contained" 

@@ -78,8 +78,8 @@ export function FractalVisualization({ thoughts }) {
     // Add circles with different styling based on depth
     node.append("circle")
       .attr("r", d => d.r)
-      .attr("fill", d => d.data.color || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#222" : "#444"))
-      .attr("stroke", d => d.depth === 0 ? "transparent" : d.depth === 1 ? "#fff" : d.data.color || "#888")
+      .attr("fill", d => d.data.color || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#f5f5f5" : "#e0e0e0"))
+      .attr("stroke", d => d.depth === 0 ? "transparent" : d.depth === 1 ? "#333" : d.data.color || "#666")
       .attr("stroke-width", d => d.depth === 0 ? 0 : 2)
       .attr("fill-opacity", d => 1 - d.depth * 0.2);
     
@@ -89,7 +89,7 @@ export function FractalVisualization({ thoughts }) {
       .attr("dy", d => d.depth === 0 ? "-0.5em" : "0.3em")
       .attr("text-anchor", "middle")
       .attr("font-size", d => Math.max(8, 18 - d.depth * 4))
-      .attr("fill", "#fff")
+      .attr("fill", "#333")
       .text(d => d.data.name?.substring(0, Math.max(3, 20 - d.depth * 5)));
     
     // Add fractal patterns for connected thought processes
@@ -132,7 +132,7 @@ export function FractalVisualization({ thoughts }) {
     <Box sx={{ position: "relative", width: "100%", height: "600px", mt: 4 }}>
       <svg
         ref={svgRef}
-        style={{ width: "100%", height: "100%", backgroundColor: "#111" }}
+        style={{ width: "100%", height: "100%", backgroundColor: "#fff" }}
         onClick={() => setSelectedNode(null)}
       />
       
@@ -142,11 +142,11 @@ export function FractalVisualization({ thoughts }) {
           top: 20, 
           right: 20, 
           maxWidth: 350, 
-          backgroundColor: "#222",
-          border: `1px solid ${selectedNode.data.color || "#fff"}`
+          backgroundColor: "#fff",
+          border: `1px solid ${selectedNode.data.color || "#333"}`
         }}>
           <CardContent>
-            <Typography variant="h6" sx={{ color: selectedNode.data.color || "#fff" }}>
+            <Typography variant="h6" sx={{ color: selectedNode.data.color || "#333" }}>
               {selectedNode.data.initialState?.substring(0, 50)}
             </Typography>
             

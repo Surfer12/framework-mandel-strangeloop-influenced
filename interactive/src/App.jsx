@@ -8,6 +8,8 @@ import {
   Card,
   CardContent,
   Chip,
+  ThemeProvider,
+  createTheme,
 } from '@mui/material';
 import {
   MenuBook as MenuBookIcon,
@@ -15,21 +17,41 @@ import {
   BubbleChart as BubbleChartIcon,
   Visibility as VisibilityIcon,
 } from '@mui/icons-material';
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { darkTheme } from './theme/darkTheme';
+import { CssBaseline } from '@mui/material';
 import { useLocalStorage } from './utils/useLocalStorage';
 import { FractalThoughtProcess } from './components/FractalThoughtProcess';
 import { FractalVisualization } from './components/FractalVisualization';
 import { MetaCInterventionTool } from './components/MetaCInterventionTool';
-import { FRACTAL_FRAMEWORK } from './utils/framework';
+import { FRACTAL_FRAMEWORK, interventionTypes } from './utils/framework';
+
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#dc004e',
+    },
+  },
+});
 
 function App() {
+  console.log('App component rendering');
+  
   const [thoughts, setThoughts] = useLocalStorage("fractal_thoughts", []);
   const [interventions, setInterventions] = useLocalStorage("meta_c_interventions", []);
   const [view, setView] = React.useState("fractal");
   
+  console.log('Current state:', { thoughts, interventions, view });
+  
   const handleSaveThought = (newThought) => {
-    setThoughts(prev => [...prev, newThought]);
+    console.log('Saving new thought:', newThought);
+    setThoughts(prev => {
+      const updatedThoughts = [...prev, newThought];
+      console.log('Updated thoughts:', updatedThoughts);
+      return updatedThoughts;
+    });
   };
   
   const handleSaveIntervention = (newIntervention) => {
@@ -37,7 +59,7 @@ function App() {
   };
   
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Container maxWidth="lg">
         <Box sx={{ py: 4, display: 'flex', flexDirection: 'column', gap: 4 }}>
@@ -70,14 +92,14 @@ function App() {
             <>
               <FractalThoughtProcess onSave={handleSaveThought} />
               
-              <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(255,255,255,0.1)', pb: 1 }}>
-                Recent Thought Processes
+              <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', pb: 1 }}>
+                Recent Thought Processes ({thoughts.length})
               </Typography>
               
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {thoughts.slice(-5).reverse().map((thought) => (
-                  <Card key={thought.timestamp} sx={{ 
-                    backgroundColor: "#222", 
+                {thoughts.slice(-5).reverse().map((thought, index) => (
+                  <Card key={thought.timestamp || index} sx={{ 
+                    backgroundColor: "#fff", 
                     border: `1px solid ${FRACTAL_FRAMEWORK[thought.processingLevel || "mesoLevel"].color}30` 
                   }}>
                     <CardContent>
@@ -125,7 +147,7 @@ function App() {
                         <Chip 
                           size="small" 
                           label={`Iteration ${thought.iterationCount || 1}`}
-                          sx={{ backgroundColor: 'rgba(255,255,255,0.1)' }}
+                          sx={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
                         />
                       </Box>
                     </CardContent>
@@ -159,7 +181,7 @@ function App() {
               
               <MetaCInterventionTool thoughts={thoughts} onSaveIntervention={handleSaveIntervention} />
               
-              <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(255,255,255,0.1)', pb: 1 }}>
+              <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', pb: 1 }}>
                 Recent Interventions
               </Typography>
               
@@ -169,7 +191,7 @@ function App() {
                   const InterventionIcon = interventionType.icon;
                   return (
                     <Card key={intervention.timestamp} sx={{ 
-                      backgroundColor: "#222", 
+                      backgroundColor: "#fff", 
                       border: `1px solid ${interventionType.color}` 
                     }}>
                       <CardContent>
@@ -215,7 +237,7 @@ function App() {
           )}
           
           {/* Footer with fractal model reference */}
-          <Box sx={{ mt: 8, pt: 3, borderTop: '1px solid rgba(255,255,255,0.1)', textAlign: 'center' }}>
+          <Box sx={{ mt: 8, pt: 3, borderTop: '1px solid rgba(0,0,0,0.1)', textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
               Based on the Fractal Communication Framework: z = z² + c
             </Typography>

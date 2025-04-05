@@ -76,7 +76,7 @@ export function FractalThoughtProcess({ onSave }) {
   const CurrentIcon = currentFramework.icon;
   
   return (
-    <Card sx={{ mb: 4, p: 2, backgroundColor: "#222", border: `1px solid ${currentFramework.color}` }}>
+    <Card sx={{ mb: 4, p: 2, backgroundColor: "#fff", border: `1px solid ${currentFramework.color}` }}>
       <CardContent>
         <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', gap: 1, color: currentFramework.color }}>
           <CurrentIcon /> {currentFramework.label}
@@ -84,7 +84,7 @@ export function FractalThoughtProcess({ onSave }) {
             <Chip 
               size="small" 
               label={`Iteration ${thoughtProcess.iterationCount}`} 
-              sx={{ ml: 2, backgroundColor: 'rgba(255,255,255,0.1)' }} 
+              sx={{ ml: 2, backgroundColor: 'rgba(0,0,0,0.1)' }} 
             />
           )}
         </Typography>
