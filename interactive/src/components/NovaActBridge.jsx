@@ -24,7 +24,7 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
     const initNovaAct = async () => {
       try {
         // Import Nova Act dynamically
-        const { NovaAct } = await import('nova_act');
+        const { NovaAct } = await import('../../../nova-act/nova_act');
         const instance = new NovaAct({
           config: {
             environment: "development",

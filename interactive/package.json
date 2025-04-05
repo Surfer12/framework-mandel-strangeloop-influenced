@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
+    "d3": "^7.9.0",
     "nova_act": "file:../nova-act",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
