@@ -1,24 +1,26 @@
 {
-  "name": "archives-of-transition",
-  "version": "1.0.0",
-  "description": "Interactive thought archiving application",
-  "main": "index.js",
+  "name": "fractal-communication-explorer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "vite",
+    "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "@mui/material": "^5.14.5",
-    "@mui/icons-material": "^5.14.5",
-    "@emotion/react": "^11.11.1",
+    "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "d3": "^7.8.5"
+    "@mui/icons-material": "^5.15.10",
+    "@mui/material": "^5.15.10",
+    "d3": "^7.8.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite": "^5.0.10"
+    "vite": "^5.1.0"
   }
 }

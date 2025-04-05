@@ -1,0 +1,186 @@
+
+## <yaml_therapeutic_model> 2
+intention_framework:
+  # Core Tags (existing)
+  tags:
+    - &grounding "present_awareness"
+    - &openness "receptivity_to_experience"
+    - &integration "meaning_construction"
+    - &transformation "pattern_disruption"
+    - &embodiment "somatic_awareness"
+
+  # New Core Tags (added)
+    - &meta_awareness "pattern_recognition_across_scales"
+    - &attentional_flexibility "dynamic_focus_allocation"
+    - &iterative_refinement "recursive_understanding_development"
+
+  # Custom Tag Declaration (including new tags)
+  custom_tags:
+    # Existing tags...
+    - !tag &compassion
+      name: "self_directed_kindness"
+      description: "The practice of treating oneself with kindness and understanding"
+      applications:
+        - "Self-talk modification"
+        - "Inner critic management"
+      somatic_marker: "Warmth in chest area"
+
+    # ... other existing tags ...
+
+    # New tags informed by AI architecture
+    - !tag &selective_attention
+      name: "focused_awareness_allocation"
+      description: "Ability to dynamically direct attention to relevant aspects of experience"
+      applications:
+        - "Noise filtering in complex environments"
+        - "Prioritization of information streams"
+      somatic_marker: "Focused sensation in forehead and eyes"
+      meta_cognitive_marker: "Awareness of attention direction"
+
+    - !tag &context_integration
+      name: "holistic_understanding"
+      description: "Capacity to maintain broader context while processing specific details"
+      applications:
+        - "Maintaining conversation coherence"
+        - "Connecting immediate experience to longer timelines"
+      somatic_marker: "Expansive awareness in peripheral vision"
+      cognitive_stance: "Both focused and panoramic awareness"
+
+    - !tag &recursive_processing
+      name: "iterative_understanding_refinement"
+      description: "Multi-pass cognitive processing that refines understanding through successive iterations"
+      applications:
+        - "Complex problem solving"
+        - "Deep listening and understanding"
+      somatic_marker: "Spiraling sensation in thought process"
+      fractal_property: "Self-similar refinement across scales"
+
+    - !tag &transformative_integration
+      name: "perspective_shifting_synthesis"
+      description: "Capacity to incorporate new information that fundamentally shifts understanding"
+      applications:
+        - "Paradigm updates"
+        - "Adaptive belief revision"
+      somatic_marker: "Felt sense of mental reorganization"
+      cognitive_stance: "Openness to fundamental restructuring"
+
+  # Enhanced Anchors
+  anchors:
+    # Existing anchors...
+    - &safety_anchor
+      intention: "Create internal safety container"
+      somatic_marker: "Breath as anchor point"
+
+    # ... other existing anchors ...
+
+    # New anchors informed by AI architecture
+    - &meta_awareness_anchor
+      intention: "Establish explicit awareness of thinking patterns"
+      cognitive_stance: "Observer of thought processes"
+      applications:
+        - "Pattern recognition in conversation"
+        - "Identification of recurring themes"
+        - "Awareness of attention allocation"
+
+    - &multi_scale_anchor
+      intention: "Maintain awareness across multiple scales simultaneously"
+      cognitive_stance: "Nested awareness from details to big picture"
+      applications:
+        - "Connecting immediate experience to larger patterns"
+        - "Identifying self-similar patterns at different scales"
+        - "Balancing detail focus with contextual awareness"
+
+  # Enhanced Recursive Intention Structure
+  recursive_intentions:
+    # Existing recursive intentions...
+    - type: *grounding
+      primary: "I am mindfully aware of my thought patterns"
+      reference: *safety_anchor
+      sub_intentions:
+        - "I observe my thoughts without judgment"
+        - "I express my observations of self"
+        - "I recognize the structure and flow of my thinking"
+
+    # ... other existing intentions ...
+
+    # New recursive intentions informed by AI architecture
+    - type: *meta_awareness
+      primary: "I am aware of my own awareness processes"
+      reference: *meta_awareness_anchor
+      sub_intentions:
+        - "I notice patterns in my attention allocation"
+        - "I observe how my understanding evolves through iteration"
+        - "I recognize fractal patterns across different scales of experience"
+        - type: *attentional_flexibility
+          primary: "I dynamically adjust my focus based on relevance and context"
+          sub_intentions:
+            - "I zoom in to examine details when appropriate"
+            - "I zoom out to see broader patterns when needed"
+            - "I maintain awareness of context while focusing on specifics"
+
+    - type: *iterative_refinement
+      primary: "I develop understanding through multiple passes of reflection"
+      reference: *multi_scale_anchor
+      sub_intentions:
+        - "I revisit initial impressions with deeper attention"
+        - "I refine concepts through successive approximations"
+        - "I integrate feedback to evolve my understanding"
+        - type: *integration
+          primary: "I synthesize insights across iterations"
+          sub_intentions:
+            - "I identify emergent patterns across processing cycles"
+            - "I build coherent understanding from iterative refinements"
+            - type: *transformation
+              primary: "I allow fundamental reorganization when new patterns emerge"
+              reference: *return_anchor
+              sub_intentions:
+                - "I release attachment to previous iterations when no longer optimal"
+                - "I recognize bifurcation points where small changes create new patterns"
+
+  # New Section: Fractal Processing Framework
+  fractal_processing:
+    # Mandelbrot-inspired processing structure
+    mandelbrot_application:
+      formula: "z = z² + c"
+      cognitive_interpretation:
+        z: "Current understanding state"
+        z²: "Recursive elaboration through reflection"
+        c: "Novel input or perspective"
+        new_z: "Evolved understanding"
+
+    # Processing levels
+    processing_levels:
+      - level: "Micro"
+        focus: "Individual elements (words, sensations, thoughts)"
+        awareness_type: *selective_attention
+
+      - level: "Meso"
+        focus: "Patterns and relationships between elements"
+        awareness_type: *context_integration
+
+      - level: "Macro"
+        focus: "Overall themes and conceptual frameworks"
+        awareness_type: *integration
+
+      - level: "Meta"
+        focus: "Awareness of the processing itself"
+        awareness_type: *meta_awareness
+
+    # Self-similar patterns across scales
+    fractal_properties:
+      - property: "Self-similarity across scales"
+        description: "Similar patterns appearing at different levels of focus"
+        application: "Recognizing how immediate interactions reflect larger patterns"
+
+      - property: "Sensitivity to initial conditions"
+        description: "Small changes in input creating significant shifts in understanding"
+        application: "Identifying key moments where small interventions have large impacts"
+
+      - property: "Bounded infinity"
+        description: "Unlimited exploration within defined boundaries"
+        application: "Exploring infinite depth while maintaining focus on relevant domains"
+
+      - property: "Edge of chaos dynamics"
+        description: "Most generative zone between order and chaos"
+        application: "Maintaining balance between structure and creative emergence"
+## </yaml_therapeutic_model>

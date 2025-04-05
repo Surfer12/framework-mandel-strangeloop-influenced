@@ -1,0 +1,208 @@
+## <yaml_therapeutic_model>
+intention_framework:
+  # Core Tags (existing + new)
+  tags:
+    - &grounding "present_awareness"
+    - &openness "receptivity_to_experience"
+    - &integration "meaning_construction"
+    - &transformation "pattern_disruption"
+    - &embodiment "somatic_awareness"
+    # --- New Core Tags ---
+    - &meta_awareness "pattern_recognition_across_scales" # Explicit meta-awareness & pattern recognition
+    - &attentional_flexibility "dynamic_focus_allocation" # Attention mechanisms
+    - &iterative_refinement "recursive_understanding_development" # Recursive processing
+
+  # Custom Tag Declaration (including new tags)
+  custom_tags:
+    # --- Existing tags ---
+    - !tag &compassion
+      name: "self_directed_kindness"
+      description: "The practice of treating oneself with kindness and understanding"
+      applications:
+        - "Self-talk modification"
+        - "Inner critic management"
+      somatic_marker: "Warmth in chest area"
+    - !tag &resilience
+      name: "adaptive_capacity"
+      # ... (description, applications, marker)
+    - !tag &mindfulness
+      name: "intentional_attention"
+      # ... (description, applications, marker)
+    - !tag &acceptance
+      name: "non_judgmental_stance"
+      # ... (description, applications, marker)
+    - !tag &presence
+      name: "full_engagement_now"
+      # ... (description, applications, marker)
+    - !tag &authenticity
+      name: "true_self_expression"
+      # ... (description, applications, marker)
+
+    # --- New tags informed by AI architecture ---
+    - !tag &selective_attention
+      name: "focused_awareness_allocation"
+      description: "Ability to dynamically direct attention to relevant aspects of experience while filtering noise."
+      applications:
+        - "Concentration amidst distractions"
+        - "Prioritization of information streams"
+        - "Discerning signal from noise"
+      somatic_marker: "Focused sensation (e.g., forehead, eyes)"
+      meta_cognitive_marker: "Awareness of where attention *is* directed" # Link to meta_awareness
+
+    - !tag &context_integration_tag # Renamed slightly to avoid conflict with core tag
+      name: "holistic_contextual_awareness"
+      description: "Capacity to maintain and integrate broader context (history, environment, relationships) while processing specific details."
+      applications:
+        - "Maintaining conversation coherence over time"
+        - "Connecting immediate experience to longer timelines or larger systems"
+        - "Understanding parts in relation to the whole"
+      somatic_marker: "Expansive awareness, peripheral sensitivity"
+      cognitive_stance: "Holding both focus and periphery simultaneously" # Link to attentional_flexibility
+
+    - !tag &recursive_processing_tag # Renamed slightly
+      name: "iterative_understanding_deepening"
+      description: "Multi-pass cognitive/emotional processing that refines understanding, insight, or feeling through successive iterations."
+      applications:
+        - "Complex problem solving"
+        - "Deep listening and perspective-taking"
+        - "Processing complex emotions layer by layer"
+      somatic_marker: "Sense of spiraling deeper into a topic/feeling"
+      fractal_property: "Self-similar refinement across iterations" # Link to iterative_refinement
+
+    - !tag &transformative_integration_tag # Renamed slightly
+      name: "paradigm_shifting_synthesis"
+      description: "Capacity to incorporate new information or experiences that fundamentally shift core understanding, beliefs, or self-concept."
+      applications:
+        - "Integrating peak experiences or deep insights"
+        - "Adaptive belief revision after cognitive dissonance"
+        - "Fundamental identity reorganization"
+      somatic_marker: "Felt sense of profound mental/emotional reorganization or 'click'"
+      cognitive_stance: "Openness to fundamental restructuring (*openness* applied at core level)" # Link to transformation
+
+  # Enhanced Anchors (existing + new)
+  anchors:
+    # --- Existing anchors ---
+    - &safety_anchor
+      intention: "Create internal safety container"
+      somatic_marker: "Breath as anchor point"
+    - &curiosity_anchor
+      intention: "Approach experience with non-judgmental curiosity"
+      cognitive_stance: "Witnessing without attachment"
+    - &return_anchor
+      intention: "Path back to centered awareness"
+      somatic_marker: "Grounding through breath"
+
+    # --- New anchors informed by AI architecture ---
+    - &meta_awareness_anchor
+      intention: "Establish explicit awareness of internal processes (thoughts, feelings, attention)"
+      cognitive_stance: "Observing the observer and the observed"
+      applications:
+        - "Real-time pattern recognition in conversation/thought"
+        - "Identification of recurring themes or biases"
+        - "Tracking attention allocation and flow" # Link to attentional_flexibility
+
+    - &multi_scale_anchor
+      intention: "Maintain awareness across multiple scales simultaneously (detail, pattern, context)"
+      cognitive_stance: "Nested awareness: zoom lens capability"
+      applications:
+        - "Connecting immediate experience ('token') to larger life patterns ('macro')"
+        - "Identifying self-similar fractal patterns at different scales"
+        - "Balancing detail focus with contextual understanding" # Link to context_integration_tag
+
+  # Enhanced Recursive Intention Structure (existing + new)
+  recursive_intentions:
+    # --- Existing recursive intentions (may be slightly adapted later) ---
+    - type: *grounding
+      primary: "I am mindfully aware of my sensory experience now"
+      reference: *safety_anchor
+      sub_intentions:
+        - "I return gently to my breath when my mind wanders"
+        - "I feel my body connected to the earth"
+    # ... other existing structures for openness, integration, transformation, embodiment ...
+
+    # --- New recursive intentions informed by AI architecture ---
+    - type: *meta_awareness # Using the new core tag
+      primary: "I am aware of my own awareness processes across scales"
+      reference: *meta_awareness_anchor # Linking to the new anchor
+      sub_intentions:
+        - "I notice *how* I am processing this experience (thoughts, feelings, attention)"
+        - "I observe recurring patterns in my internal landscape"
+        - "I recognize self-similar patterns across different contexts or times"
+        - type: *attentional_flexibility # Using another new core tag
+          primary: "I dynamically adjust my focus based on relevance and context"
+          reference: *multi_scale_anchor # Linking focus shifts to scale awareness
+          sub_intentions:
+            - "I intentionally zoom in to examine specific details"
+            - "I intentionally zoom out to perceive the broader context"
+            - "I practice holding both foreground and background awareness"
+
+    - type: *iterative_refinement # Using the new core tag
+      primary: "I deepen understanding through recursive exploration"
+      reference: *recursive_processing_tag # Linking to the related custom tag concept
+      sub_intentions:
+        - "I revisit initial impressions with curiosity and openness"
+        - "I allow understanding to evolve through successive layers of insight"
+        - "I integrate feedback and new information across iterations"
+        - type: *integration # Nesting existing core tag
+          primary: "I synthesize insights emerging across iterations into coherent meaning"
+          sub_intentions:
+            - "I identify emergent themes or patterns not visible initially"
+            - "I build a richer, multi-layered narrative"
+            - type: *transformation # Nesting existing core tag
+              primary: "I allow fundamental reorganization when deeper patterns emerge"
+              reference: *transformative_integration_tag # Linking to the relevant concept
+              sub_intentions:
+                - "I release attachment to previous understandings when necessary"
+                - "I embrace paradigm shifts catalyzed by iterative refinement"
+
+  # --- New Section: Fractal Processing Framework ---
+  fractal_processing:
+    # Mandelbrot-inspired cognitive/affective processing
+    mandelbrot_application:
+      formula: "z = z² + c"
+      experiential_interpretation:
+        z: "Current state of understanding/feeling/awareness"
+        z²: "Recursive elaboration through internal reflection/processing (applying existing patterns)"
+        c: "Novel input (internal insight, external info, therapeutic anchor/intention)"
+        new_z: "Evolved state of understanding/feeling/awareness"
+
+    # Experiential Processing Levels (Multi-Scale Processing)
+    processing_levels:
+      - level: "Micro (Elements)"
+        focus: "Individual thoughts, sensations, words, moments"
+        awareness_type: *selective_attention
+        example_anchor: *grounding
+
+      - level: "Meso (Patterns)"
+        focus: "Relationships between elements, immediate context, interaction sequences"
+        awareness_type: *context_integration_tag
+        example_anchor: *curiosity_anchor
+
+      - level: "Macro (Themes/Frameworks)"
+        focus: "Overall narratives, life patterns, conceptual understanding, belief systems"
+        awareness_type: *integration
+        example_anchor: *multi_scale_anchor
+
+      - level: "Meta (Process Awareness)"
+        focus: "Awareness of the processing itself across all levels"
+        awareness_type: *meta_awareness
+        example_anchor: *meta_awareness_anchor
+
+    # Key Fractal Properties in Experience
+    fractal_properties_experiential:
+      - property: "Self-similarity across scales"
+        description: "Similar emotional/cognitive patterns appearing at micro, meso, and macro levels."
+        application: "Recognizing how a momentary reaction reflects a larger life pattern."
+
+      - property: "Sensitivity to initial conditions (Bifurcation Points)"
+        description: "Small shifts in attention, interpretation, or response (c) creating significant divergence in outcome."
+        application: "Identifying key moments where mindful choice (*transformation*) can alter trajectory."
+
+      - property: "Iteration and Refinement"
+        description: "Understanding/healing unfolds through repeated cycles of processing."
+        application: "Trusting the process of *iterative_refinement* even without immediate resolution."
+
+      - property: "Edge of Chaos Dynamics"
+        description: "The fertile, potentially uncomfortable zone between rigid patterns and overwhelming chaos."
+        application: "Cultivating *resilience* and *safety_anchor* use to navigate transformative zones."
+## </yaml_therapeutic_model>
