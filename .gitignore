@@ -1,2 +1,32 @@
-/target
+**/target
+target/**
+**/target/**
+
 .env
+tatus
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/0a0ba345-017a-476b-8055-3db3e88cf810.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/000e3e9d-c04d-4707-8fec-891c22872b5a.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/3acb8f15-a688-490f-b88d-a7dd90d82ac0.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/7d2517a2-6b04-4493-9502-54b23ab4e65e.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/dd286dc7-258f-4df7-81f9-7a489c8cc903.vsidx
+rustup-init.exe
+.vs/slnx.sqlite
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/04a85f54-f17b-4424-9011-7c606da2f6a1.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/a1127be3-3a2b-4941-adb8-ea79fd8eb6f8.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/0a428b18-6d06-4ef3-8f16-c885743f8831.vsidx
+.vs/framework-mandel-strangeloop-influenced/FileContentIndex/6ec6112e-625c-42ae-914d-e15d24caad38.vsidx
+
+# Lua
+*.luac
+*.lua~
+*.lua.swp
+*.lua.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
