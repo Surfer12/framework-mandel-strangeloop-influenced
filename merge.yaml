@@ -1,4 +1,24 @@
-## <yaml_therapeutic_model>
+## <yaml_therapeutic_model># Fractal Therapeutic Model v2.0
+# An integrated framework combining fractal mathematics principles with therapeutic psychology
+# Designed for application in cognitive processing, emotional regulation, and transformative work
+
+description: >
+  This framework applies principles from Mandelbrot's fractal mathematics to therapeutic practice,
+  creating an integrated approach for processing experience across multiple scales.
+  It enables recursive exploration of thoughts, emotions, and patterns
+  through the application of the z = z² + c formula as a metaphorical guide.
+
+version: 2.0
+last_updated: "2025-04-17"
+authors:
+  - "Project Aria Development Team"
+
+usage_contexts:
+  - "Individual therapeutic processing"
+  - "AI-assisted cognitive exploration"
+  - "Facilitated group dynamics"
+  - "Meditative self-inquiry"
+  - "Creative problem-solving"
 intention_framework:
   # Core Tags (existing + new)
   tags:
@@ -8,49 +28,49 @@ intention_framework:
     - &transformation "pattern_disruption"
     - &embodiment "somatic_awareness"
     # --- New Core Tags ---
-    - &meta_awareness "pattern_recognition_across_scales" 
-    - &attentional_flexibility "dynamic_focus_allocation" 
-    - &iterative_refinement "recursive_understanding_development" 
+    - &meta_awareness "pattern_recognition_across_scales"
+    - &attentional_flexibility "dynamic_focus_allocation"
+    - &iterative_refinement "recursive_understanding_development"
 
   # Custom Tag Declaration (including new tags)
   custom_tags:
     # --- Existing tags ---
-    - !tag &compassion
+    - &compassion
       name: "self_directed_kindness"
       description: "The practice of treating oneself with kindness and understanding"
       applications:
         - "Self-talk modification"
         - "Inner critic management"
       somatic_marker: "Warmth in chest area"
-    - !tag &resilience
+    - &resilience
       name: "adaptive_capacity"
       description: "Ability to bounce back from difficulties and adapt to change"
       applications:
         - "Stress response modulation"
         - "Recovery from setbacks"
       somatic_marker: "Flexible tension in core"
-    - !tag &mindfulness
+    - &mindfulness
       name: "intentional_attention"
       description: "Deliberate focus of attention on present experience without judgment"
       applications:
         - "Thought observation"
         - "Emotion regulation"
       somatic_marker: "Steady breath rhythm"
-    - !tag &acceptance
+    - &acceptance
       name: "non_judgmental_stance"
       description: "Allowing experiences to be as they are without imposing evaluation"
       applications:
         - "Reducing resistance"
         - "Increasing psychological flexibility"
       somatic_marker: "Open posture and relaxed shoulders"
-    - !tag &presence
+    - &presence
       name: "full_engagement_now"
       description: "Complete attentional focus on the current moment"
       applications:
         - "Flow state induction"
         - "Sensory awareness enhancement"
       somatic_marker: "Grounded feet sensation"
-    - !tag &authenticity
+    - &authenticity
       name: "true_self_expression"
       description: "Alignment between inner experience and outward behavior"
       applications:
@@ -59,7 +79,7 @@ intention_framework:
       somatic_marker: "Throat openness"
 
     # --- New tags informed by AI architecture ---
-    - !tag &selective_attention
+    - &selective_attention
       name: "focused_awareness_allocation"
       description: "Ability to dynamically direct attention to relevant aspects of experience while filtering noise."
       applications:
@@ -69,7 +89,7 @@ intention_framework:
       somatic_marker: "Focused sensation (e.g., forehead, eyes)"
       meta_cognitive_marker: "Awareness of where attention *is* directed"
 
-    - !tag &context_integration_tag
+    - &context_integration_tag
       name: "holistic_contextual_awareness"
       description: "Capacity to maintain and integrate broader context (history, environment, relationships) while processing specific details."
       applications:
@@ -79,7 +99,7 @@ intention_framework:
       somatic_marker: "Expansive awareness, peripheral sensitivity"
       cognitive_stance: "Holding both focus and periphery simultaneously"
 
-    - !tag &recursive_processing_tag
+    - &recursive_processing_tag
       name: "iterative_understanding_deepening"
       description: "Multi-pass cognitive/emotional processing that refines understanding, insight, or feeling through successive iterations."
       applications:
@@ -89,7 +109,7 @@ intention_framework:
       somatic_marker: "Sense of spiraling deeper into a topic/feeling"
       fractal_property: "Self-similar refinement across iterations"
 
-    - !tag &transformative_integration_tag
+    - &transformative_integration_tag
       name: "paradigm_shifting_synthesis"
       description: "Capacity to incorporate new information or experiences that fundamentally shift core understanding, beliefs, or self-concept."
       applications:
@@ -225,5 +245,3 @@ intention_framework:
         description: "The fertile, potentially uncomfortable zone between rigid patterns and overwhelming chaos."
         application: "Cultivating *resilience* and *safety_anchor* use to navigate transformative zones."
 ## </yaml_therapeutic_model>
-```
-

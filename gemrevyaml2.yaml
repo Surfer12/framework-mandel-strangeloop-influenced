@@ -15,31 +15,31 @@ intention_framework:
   # Custom Tag Declaration (including new tags)
   custom_tags:
     # --- Existing tags ---
-    - !tag &compassion
+    - :: &compassion
       name: "self_directed_kindness"
       description: "The practice of treating oneself with kindness and understanding"
       applications:
         - "Self-talk modification"
         - "Inner critic management"
       somatic_marker: "Warmth in chest area"
-    - !tag &resilience
+    - tag:: &resilience
       name: "adaptive_capacity"
       # ... (description, applications, marker)
-    - !tag &mindfulness
+    - tag:tag: &mindfulness
       name: "intentional_attention"
       # ... (description, applications, marker)
-    - !tag &acceptance
+    - tag:: &acceptance
       name: "non_judgmental_stance"
       # ... (description, applications, marker)
-    - !tag &presence
+    - tag:: &presence
       name: "full_engagement_now"
       # ... (description, applications, marker)
-    - !tag &authenticity
+    - tag:: &authenticity
       name: "true_self_expression"
       # ... (description, applications, marker)
 
     # --- New tags informed by AI architecture ---
-    - !tag &selective_attention
+    - tag:: &selective_attention
       name: "focused_awareness_allocation"
       description: "Ability to dynamically direct attention to relevant aspects of experience while filtering noise."
       applications:
@@ -49,7 +49,7 @@ intention_framework:
       somatic_marker: "Focused sensation (e.g., forehead, eyes)"
       meta_cognitive_marker: "Awareness of where attention *is* directed" # Link to meta_awareness
 
-    - !tag &context_integration_tag # Renamed slightly to avoid conflict with core tag
+    - tag: &:context_integration_tag # Renamed slightly to avoid conflict with core tag
       name: "holistic_contextual_awareness"
       description: "Capacity to maintain and integrate broader context (history, environment, relationships) while processing specific details."
       applications:
@@ -59,7 +59,7 @@ intention_framework:
       somatic_marker: "Expansive awareness, peripheral sensitivity"
       cognitive_stance: "Holding both focus and periphery simultaneously" # Link to attentional_flexibility
 
-    - !tag &recursive_processing_tag # Renamed slightly
+    - tag:: &recursive_processing_tag # Renamed slightly
       name: "iterative_understanding_deepening"
       description: "Multi-pass cognitive/emotional processing that refines understanding, insight, or feeling through successive iterations."
       applications:
@@ -69,7 +69,7 @@ intention_framework:
       somatic_marker: "Sense of spiraling deeper into a topic/feeling"
       fractal_property: "Self-similar refinement across iterations" # Link to iterative_refinement
 
-    - !tag &transformative_integration_tag # Renamed slightly
+    - tag:: &transformative_integration_tag # Renamed slightly
       name: "paradigm_shifting_synthesis"
       description: "Capacity to incorporate new information or experiences that fundamentally shift core understanding, beliefs, or self-concept."
       applications:
@@ -205,4 +205,133 @@ intention_framework:
       - property: "Edge of Chaos Dynamics"
         description: "The fertile, potentially uncomfortable zone between rigid patterns and overwhelming chaos."
         application: "Cultivating *resilience* and *safety_anchor* use to navigate transformative zones."
+
+        # Multi-Scale Processing Architecture
+        multi_scale_fractal_cognitive_architecture:
+          # Each cognitive layer processes across all scales
+
+          perception_layer:
+            micro_processing:  # Individual elements, sensations, words
+              awareness_type: *selective_attention
+              anchor: *grounding
+              z₀: initial_input_elements
+              z₁: "z₀² + c_micro_perception"
+
+            meso_processing:  # Patterns, relationships between elements
+              awareness_type: *context_integration_tag
+              anchor: *curiosity_anchor
+              z₀: pattern_relationships
+              z₁: "z₀² + c_meso_perception"
+
+            macro_processing:  # Overall frameworks, narratives
+              awareness_type: *integration
+              anchor: *multi_scale_anchor
+              z₀: conceptual_frameworks
+              z₁: "z₀² + c_macro_perception"
+
+            meta_processing:  # Awareness of the processing itself
+              awareness_type: *meta_awareness
+              anchor: *meta_awareness_anchor
+              z₀: process_awareness
+              z₁: "z₀² + c_meta_perception"
+
+          integration_layer:
+            micro_processing:  # Individual connections and associations
+              awareness_type: *openness
+              anchor: *curiosity_anchor
+              z₀: perceived_elements
+              z₁: "z₀² + c_micro_integration"
+
+            meso_processing:  # Connecting patterns with existing knowledge
+              awareness_type: *context_integration_tag
+              anchor: *curiosity_anchor
+              z₀: identified_patterns
+              z₁: "z₀² + c_meso_integration"
+
+            macro_processing:  # Integrating with broader frameworks
+              awareness_type: *integration
+              anchor: *multi_scale_anchor
+              z₀: emerging_frameworks
+              z₁: "z₀² + c_macro_integration"
+
+            meta_processing:  # Awareness of integration process
+              awareness_type: *meta_awareness
+              anchor: *meta_awareness_anchor
+              z₀: integration_awareness
+              z₁: "z₀² + c_meta_integration"
+
+          synthesis_layer:
+            micro_processing:  # Synthesizing elements into insights
+              awareness_type: *integration
+              anchor: *mindfulness
+              z₀: integrated_elements
+              z₁: "z₀² + c_micro_synthesis"
+
+            meso_processing:  # Pattern synthesis and novel connections
+              awareness_type: *recursive_processing_tag
+              anchor: *curiosity_anchor
+              z₀: integrated_patterns
+              z₁: "z₀² + c_meso_synthesis"
+
+            macro_processing:  # Framework synthesis and paradigm shifts
+              awareness_type: *transformative_integration_tag
+              anchor: *multi_scale_anchor
+              z₀: integrated_frameworks
+              z₁: "z₀² + c_macro_synthesis"
+
+            meta_processing:  # Awareness of synthesis process
+              awareness_type: *meta_awareness
+              anchor: *meta_awareness_anchor
+              z₀: synthesis_awareness
+              z₁: "z₀² + c_meta_synthesis"
+
+          reflection_layer:
+            micro_processing:  # Reflecting on individual insights
+              awareness_type: *meta_awareness
+              anchor: *mindfulness
+              z₀: synthesized_elements
+              z₁: "z₀² + c_micro_reflection"
+
+            meso_processing:  # Reflecting on pattern significance
+              awareness_type: *iterative_refinement
+              anchor: *curiosity_anchor
+              z₀: synthesized_patterns
+              z₁: "z₀² + c_meso_reflection"
+
+            macro_processing:  # Reflecting on transformative implications
+              awareness_type: *transformation
+              anchor: *multi_scale_anchor
+              z₀: synthesized_frameworks
+              z₁: "z₀² + c_macro_reflection"
+
+            meta_processing:  # Reflecting on reflection process
+              awareness_type: *meta_awareness
+              anchor: *meta_awareness_anchor
+              z₀: reflection_awareness
+              z₁: "z₀² + c_meta_reflection"
+
+          application_layer:
+            micro_processing:  # Applying insights to specific contexts
+              awareness_type: *embodiment
+              anchor: *grounding
+              z₀: reflected_elements
+              z₁: "z₀² + c_micro_application"
+
+            meso_processing:  # Applying pattern insights to relationships
+              awareness_type: *authenticity
+              anchor: *curiosity_anchor
+              z₀: reflected_patterns
+              z₁: "z₀² + c_meso_application"
+
+            macro_processing:  # Applying framework insights to life systems
+              awareness_type: *transformative_integration_tag
+              anchor: *multi_scale_anchor
+              z₀: reflected_frameworks
+              z₁: "z₀² + c_macro_application"
+
+            meta_processing:  # Awareness of application process
+              awareness_type: *meta_awareness
+              anchor: *meta_awareness_anchor
+              z₀: application_awareness
+              z₁: "z₀² + c_meta_application"
 ## </yaml_therapeutic_model>
