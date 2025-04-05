@@ -16,12 +16,14 @@ import {
   Timeline as TimelineIcon,
   BubbleChart as BubbleChartIcon,
   Visibility as VisibilityIcon,
+  AutoAwesome as AutoAwesomeIcon,
 } from '@mui/icons-material';
 import { CssBaseline } from '@mui/material';
 import { useLocalStorage } from './utils/useLocalStorage';
 import { FractalThoughtProcess } from './components/FractalThoughtProcess';
 import { FractalVisualization } from './components/FractalVisualization';
 import { MetaCInterventionTool } from './components/MetaCInterventionTool';
+import { NovaActBridge } from './components/NovaActBridge';
 import { FRACTAL_FRAMEWORK, interventionTypes } from './utils/framework';
 
 const theme = createTheme({
@@ -85,6 +87,7 @@ function App() {
               <Tab value="fractal" icon={<TimelineIcon />} label="Fractal Process" />
               <Tab value="visualization" icon={<BubbleChartIcon />} label="Visualization" />
               <Tab value="intervention" icon={<VisibilityIcon />} label="Meta-C" />
+              <Tab value="nova" icon={<AutoAwesomeIcon />} label="Nova Act" />
             </Tabs>
           </Box>
           
@@ -233,6 +236,35 @@ function App() {
                   );
                 })}
               </Box>
+            </>
+          )}
+          
+          {view === "nova" && (
+            <>
+              <Typography variant="h6" sx={{ mb: 2 }}>
+                Nova Act Integration
+              </Typography>
+              <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
+                Nova Act provides automated exploration of fractal thought patterns through browser automation.
+                Use this to generate new insights and patterns automatically.
+              </Typography>
+              
+              <NovaActBridge 
+                onThoughtGenerated={handleSaveThought} 
+                onInterventionGenerated={handleSaveIntervention}
+              />
+              
+              {thoughts.filter(t => t.config?.enableVisualization).length > 0 && (
+                <Box sx={{ mt: 4 }}>
+                  <Typography variant="h6" sx={{ mb: 2 }}>
+                    Nova Act Visualization
+                  </Typography>
+                  <FractalVisualization 
+                    thoughts={thoughts.filter(t => t.config?.enableVisualization)} 
+                    highlightNovaAct={true}
+                  />
+                </Box>
+              )}
             </>
           )}
           
