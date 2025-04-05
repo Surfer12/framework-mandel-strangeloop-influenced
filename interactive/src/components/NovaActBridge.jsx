@@ -4,12 +4,47 @@ import { PlayArrow as PlayArrowIcon, Stop as StopIcon, Settings as SettingsIcon 
 import { FRACTAL_FRAMEWORK } from '../utils/framework';
 import { NovaActConfig } from './NovaActConfig';
 
-const API_BASE_URL = 'http://localhost:8000';
+// Mock NovaAct implementation
+class MockNovaAct {
+  constructor(config) {
+    this.config = config;
+    this.isRunning = false;
+    this.iterationCount = 0;
+  }
+
+  async start() {
+    this.isRunning = true;
+    return { status: 'success', message: 'Mock NovaAct started' };
+  }
+
+  async stop() {
+    this.isRunning = false;
+    return { status: 'success', message: 'Mock NovaAct stopped' };
+  }
+
+  async act(action, params) {
+    this.iterationCount++;
+    return {
+      initialState: "Exploring with Mock NovaAct",
+      recursiveElaboration: {
+        level: "meso",
+        pattern: "self-similarity",
+        depth: params.depth || 3
+      },
+      transformativeInput: {
+        scale: "micro",
+        transformation: "recursive"
+      },
+      emergentPattern: `Pattern ${this.iterationCount}: Fractal emergence at scale ${params.depth}`,
+      iterationCount: this.iterationCount
+    };
+  }
+}
 
 export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [status, setStatus] = useState('idle');
-  const [sessionId, setSessionId] = useState(null);
+  const [novaAct, setNovaAct] = useState(null);
   const [activeTab, setActiveTab] = useState('control');
   const [config, setConfig] = useState({
     processingLevel: 'mesoLevel',
@@ -22,39 +57,23 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
   });
 
   useEffect(() => {
-    // Initialize Nova Act
+    // Initialize Mock Nova Act
     const initNovaAct = async () => {
       try {
-        // Generate a unique session ID
-        const newSessionId = Math.random().toString(36).substring(7);
-        setSessionId(newSessionId);
-
-        // Initialize NovaAct through the API
-        const response = await fetch(`${API_BASE_URL}/init`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            session_id: newSessionId,
-            config: {
-              environment: "development",
-              logging: { level: "info" },
-              browser: {
-                starting_page: config.startingUrl,
-                headless: true,
-                chrome_channel: "chrome",
-                screen_width: 1920,
-                screen_height: 1080,
-              }
+        const instance = new MockNovaAct({
+          config: {
+            environment: "development",
+            logging: { level: "info" },
+            browser: {
+              starting_page: config.startingUrl,
+              headless: true,
+              chrome_channel: "chrome",
+              screen_width: 1920,
+              screen_height: 1080,
             }
-          }),
+          }
         });
-
-        if (!response.ok) {
-          throw new Error('Failed to initialize NovaAct');
-        }
-
+        setNovaAct(instance);
         setStatus('ready');
       } catch (error) {
         console.error('Failed to initialize Nova Act:', error);
@@ -66,29 +85,18 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
   }, [config.startingUrl]);
 
   const handleStart = async () => {
-    if (!sessionId) return;
+    if (!novaAct) return;
     
     setIsRunning(true);
     setStatus('running');
     
     try {
-      // Start NovaAct through the API
-      const startResponse = await fetch(`${API_BASE_URL}/start`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ session_id: sessionId }),
-      });
-
-      if (!startResponse.ok) {
-        throw new Error('Failed to start NovaAct');
-      }
+      await novaAct.start();
       
       // Generate initial thought
       const initialThought = {
         timestamp: Date.now(),
-        initialState: "Nova Act initialized and running",
+        initialState: "Mock Nova Act initialized and running",
         processingLevel: config.processingLevel,
         iterationCount: 1,
         config: { ...config }
@@ -98,35 +106,19 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
       
       // Start the action loop
       while (isRunning) {
-        const actResponse = await fetch(`${API_BASE_URL}/act`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            session_id: sessionId,
-            action: "explore",
-            params: {
-              depth: config.explorationDepth,
-              patternThreshold: config.patternThreshold
-            }
-          }),
+        const result = await novaAct.act("explore", {
+          depth: config.explorationDepth,
+          patternThreshold: config.patternThreshold
         });
-
-        if (!actResponse.ok) {
-          throw new Error('Failed to execute NovaAct action');
-        }
-
-        const result = await actResponse.json();
         
         const thought = {
           timestamp: Date.now(),
-          initialState: result.result.initialState || "Exploring with Nova Act",
-          recursiveElaboration: result.result.recursiveElaboration,
-          transformativeInput: result.result.transformativeInput,
-          emergentPattern: result.result.emergentPattern,
+          initialState: result.initialState || "Exploring with Mock Nova Act",
+          recursiveElaboration: result.recursiveElaboration,
+          transformativeInput: result.transformativeInput,
+          emergentPattern: result.emergentPattern,
           processingLevel: config.processingLevel,
-          iterationCount: result.result.iterationCount || 1,
+          iterationCount: result.iterationCount || 1,
           config: { ...config }
         };
         
@@ -155,22 +147,10 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
   };
 
   const handleStop = async () => {
-    if (!sessionId) return;
+    if (!novaAct) return;
     
     try {
-      // Stop NovaAct through the API
-      const stopResponse = await fetch(`${API_BASE_URL}/stop`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ session_id: sessionId }),
-      });
-
-      if (!stopResponse.ok) {
-        throw new Error('Failed to stop NovaAct');
-      }
-
+      await novaAct.stop();
       setIsRunning(false);
       setStatus('ready');
     } catch (error) {
@@ -215,7 +195,7 @@ export const NovaActBridge = ({ onThoughtGenerated, onInterventionGenerated }) =
               color={isRunning ? "error" : "primary"}
               startIcon={isRunning ? <StopIcon /> : <PlayArrowIcon />}
               onClick={isRunning ? handleStop : handleStart}
-              disabled={status === 'error' || !sessionId}
+              disabled={status === 'error' || !novaAct}
             >
               {isRunning ? 'Stop' : 'Start'} Nova Act
             </Button>
