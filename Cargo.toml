@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 tokio = { version = "1", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 reqwest = { version = "0.11", features = ["json"] }
 futures = "0.3"
 anyhow = "1.0"
@@ -14,3 +15,13 @@ thiserror = "1.0"
 log = "0.4"
 env_logger = "0.10"
 dotenv = "0.15"
+uuid = { version = "1.0", features = ["v4"] }
+chrono = { version = "0.4", features = ["serde"] }
+
+[lib]
+name = "framework_mandel_strangeloop_influenced"
+path = "src/lib.rs"
+
+[[bin]]
+name = "framework-mandel-strangeloop-influenced"
+path = "src/main.rs"

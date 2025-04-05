@@ -1,0 +1,1 @@
+$env:Path += ";C:\Users\ryano\.cargo\bin"

@@ -1,33 +1,55 @@
 use anyhow::Result;
-use framework_mandel_strangeloop_influenced::CognitiveAnthropicManager;
+use framework_mandel_strangeloop_influenced::{CognitiveAnthropicManager, CognitiveMetadata};
 use log::info;
 use dotenv::dotenv;
+use std::path::Path;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     // Load environment variables from .env file
     dotenv().ok();
     
-    // Initialize logging
+    // Initialize logger
     env_logger::init();
-    info!("Starting CognitiveAnthropicManager test");
-
-    // Create a new instance of CognitiveAnthropicManager
-    let api_key = std::env::var("ANTHROPIC_API_KEY")
-        .expect("Please set ANTHROPIC_API_KEY in .env file");
-    let api_version = std::env::var("ANTHROPIC_API_VERSION")
-        .unwrap_or_else(|_| "2023-06-01".to_string());
     
-    let mut manager = CognitiveAnthropicManager::new(api_key, api_version);
-
-    // Test input
-    let test_input = "Analyze the concept of recursive cognitive patterns in artificial intelligence systems.";
-
-    // Process the input
-    let output = manager.begin_cognitive_process(test_input.into()).await?;
+    info!("Starting cognitive framework");
     
-    info!("Processing completed successfully");
-    info!("Output: {:?}", output);
-
+    // Create a new cognitive manager
+    let mut manager = CognitiveAnthropicManager::new();
+    
+    // Add some initial cognitive nodes
+    let metadata = CognitiveMetadata {
+        confidence: 0.9,
+        source: "user_input".to_string(),
+        timestamp: chrono::Utc::now().timestamp(),
+        tags: vec!["initial".to_string(), "test".to_string()],
+    };
+    
+    manager.add_node(
+        "root",
+        "Initial cognitive exploration".to_string(),
+        metadata,
+    )?;
+    
+    // Process the cognitive tree
+    manager.process().await?;
+    
+    // Save the current state
+    let save_path = Path::new("cognitive_state.json");
+    manager.save_to_file(save_path)?;
+    
+    // Export the node tree
+    let tree_json = manager.export_node_tree()?;
+    info!("Exported node tree: {}", tree_json);
+    
+    // Demonstrate loading from file
+    let loaded_manager = CognitiveAnthropicManager::load_from_file(save_path)?;
+    info!("Successfully loaded manager from file");
+    
+    // Demonstrate importing a node tree
+    manager.import_node_tree(&tree_json)?;
+    info!("Successfully imported node tree");
+    
+    info!("Cognitive processing completed");
     Ok(())
 }
