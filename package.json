@@ -1,0 +1,19 @@
+{
+  "name": "nova-act-explorer",
+  "version": "1.0.0",
+  "description": "NovaAct Fractal Communication Explorer",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cd interactive && npm run dev",
+    "build": "cd interactive && npm run build",
+    "test": "cd interactive && npm test"
+  },
+  "workspaces": [
+    "interactive"
+  ],
+  "dependencies": {
+    "nova-act": "file:nova-act"
+  },
+  "devDependencies": {},
+  "private": true
+} 
