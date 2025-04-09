@@ -23,6 +23,7 @@ import { FractalThoughtProcess } from './components/FractalThoughtProcess';
 import { FractalVisualization } from './components/FractalVisualization';
 import { MetaCInterventionTool } from './components/MetaCInterventionTool';
 import { FRACTAL_FRAMEWORK, interventionTypes } from './utils/framework';
+import { useTranslation } from 'react-i18next';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +38,7 @@ const theme = createTheme({
 });
 
 function App() {
+  const { t } = useTranslation();
   console.log('App component rendering');
   
   const [thoughts, setThoughts] = useLocalStorage("fractal_thoughts", []);
@@ -46,7 +48,7 @@ function App() {
   console.log('Current state:', { thoughts, interventions, view });
   
   const handleSaveThought = (newThought) => {
-    console.log('Saving new thought:', encodeURIComponent(JSON.stringify(newThought))); // import encodeURIComponent
+    console.log('Saving new thought:', encodeURIComponent(JSON.stringify(newThought)));
     setThoughts(prev => {
       const updatedThoughts = [...prev, newThought];
       console.log('Updated thoughts:', encodeURIComponent(JSON.stringify(updatedThoughts)));
@@ -68,10 +70,10 @@ function App() {
               <MenuBookIcon sx={{ fontSize: 40, color: 'primary.main' }} />
               <Box>
                 <Typography variant="h4" sx={{ fontWeight: 'bold', fontFamily: 'serif' }}>
-                  Fractal Communication Explorer
+                  {t('app.title', 'Fractal Communication Explorer')}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary', fontStyle: 'italic' }}>
-                  Where thoughts evolve through z = z² + c
+                  {t('app.subtitle', 'Where thoughts evolve through z = z² + c')}
                 </Typography>
               </Box>
             </Box>
@@ -82,9 +84,9 @@ function App() {
               textColor="primary"
               indicatorColor="primary"
             >
-              <Tab value="fractal" icon={<TimelineIcon />} label="Fractal Process" />
-              <Tab value="visualization" icon={<BubbleChartIcon />} label="Visualization" />
-              <Tab value="intervention" icon={<VisibilityIcon />} label="Meta-C" />
+              <Tab value="fractal" icon={<TimelineIcon />} label={t('tabs.fractal', 'Fractal Process')} />
+              <Tab value="visualization" icon={<BubbleChartIcon />} label={t('tabs.visualization', 'Visualization')} />
+              <Tab value="intervention" icon={<VisibilityIcon />} label={t('tabs.metaC', 'Meta-C')} />
             </Tabs>
           </Box>
           
@@ -93,7 +95,7 @@ function App() {
               <FractalThoughtProcess onSave={handleSaveThought} />
               
               <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', pb: 1 }}>
-                Recent Thought Processes ({thoughts.length})
+                {t('thoughts.recent', 'Recent Thought Processes')} ({thoughts.length})
               </Typography>
               
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -110,7 +112,7 @@ function App() {
                       <Box sx={{ display: 'flex', gap: 3, mt: 2, flexWrap: 'wrap' }}>
                         <Box>
                           <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.recursiveElaboration.color }}>
-                            Recursive Elaboration (z²)
+                            {t('thoughts.recursiveElaboration', 'Recursive Elaboration (z²)')}
                           </Typography>
                           <Typography variant="body2" sx={{ mt: 0.5 }}>
                             {thought.recursiveElaboration?.substring(0, 100)}...
@@ -119,7 +121,7 @@ function App() {
                         
                         <Box>
                           <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.transformativeInput.color }}>
-                            Transformative Input (c)
+                            {t('thoughts.transformativeInput', 'Transformative Input (c)')}
                           </Typography>
                           <Typography variant="body2" sx={{ mt: 0.5 }}>
                             {thought.transformativeInput?.substring(0, 100)}...
@@ -128,7 +130,7 @@ function App() {
                         
                         <Box>
                           <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.emergentPattern.color }}>
-                            Emergent Pattern (new z)
+                            {t('thoughts.emergentPattern', 'Emergent Pattern (new z)')}
                           </Typography>
                           <Typography variant="body2" sx={{ mt: 0.5 }}>
                             {thought.emergentPattern?.substring(0, 100)}...
@@ -146,7 +148,7 @@ function App() {
                         
                         <Chip 
                           size="small" 
-                          label={`Iteration ${thought.iterationCount || 1}`}
+                          label={t('thoughts.iteration', 'Iteration {{count}}', { count: thought.iterationCount || 1 })}
                           sx={{ backgroundColor: 'rgba(0,0,0,0.1)' }}
                         />
                       </Box>
@@ -160,10 +162,10 @@ function App() {
           {view === "visualization" && (
             <>
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Fractal Thought Visualization
+                {t('visualization.title', 'Fractal Thought Visualization')}
               </Typography>
               <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
-                This visualization represents your thought processes as fractal patterns. Zoom and pan to explore connections. Click on nodes to view details.
+                {t('visualization.description', 'This visualization represents your thought processes as fractal patterns. Zoom and pan to explore connections. Click on nodes to view details.')}
               </Typography>
               <FractalVisualization thoughts={thoughts} />
             </>
@@ -172,17 +174,16 @@ function App() {
           {view === "intervention" && (
             <>
               <Typography variant="h6" sx={{ mb: 2 }}>
-                Meta-C Interventions
+                {t('interventions.title', 'Meta-C Interventions')}
               </Typography>
               <Typography variant="body2" sx={{ mb: 3, color: 'text.secondary' }}>
-                Meta-C interventions introduce awareness of the thinking process itself, creating transformative shifts in perspective. 
-                Use these for collaborative conversations to help groups recognize patterns and make conscious choices.
+                {t('interventions.description', 'Meta-C interventions introduce awareness of the thinking process itself, creating transformative shifts in perspective. Use these for collaborative conversations to help groups recognize patterns and make conscious choices.')}
               </Typography>
               
               <MetaCInterventionTool thoughts={thoughts} onSaveIntervention={handleSaveIntervention} />
               
               <Typography variant="h6" sx={{ mt: 4, mb: 2, borderBottom: '1px solid rgba(0,0,0,0.1)', pb: 1 }}>
-                Recent Interventions
+                {t('interventions.recent', 'Recent Interventions')}
               </Typography>
               
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -218,8 +219,8 @@ function App() {
                           
                           {intervention.targetThought && (
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                              Targeted at: {
-                                thoughts.find(t => t.timestamp === intervention.targetThought)?.initialState.substring(0, 30) || "Unknown thought"
+                              {t('interventions.targetedAt', 'Targeted at:')} {
+                                thoughts.find(t => t.timestamp === intervention.targetThought)?.initialState.substring(0, 30) || t('interventions.unknownThought', 'Unknown thought')
                               }...
                             </Typography>
                           )}
@@ -239,10 +240,10 @@ function App() {
           {/* Footer with fractal model reference */}
           <Box sx={{ mt: 8, pt: 3, borderTop: '1px solid rgba(0,0,0,0.1)', textAlign: 'center' }}>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              Based on the Fractal Communication Framework: z = z² + c
+              {t('footer.reference', 'Based on the Fractal Communication Framework: z = z² + c')}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 1 }}>
-              Where z = current understanding, z² = recursive elaboration, c = novel input, and new z = evolved insight
+              {t('footer.description', 'Where z = current understanding, z² = recursive elaboration, c = novel input, and new z = evolved insight')}
             </Typography>
           </Box>
         </Box>

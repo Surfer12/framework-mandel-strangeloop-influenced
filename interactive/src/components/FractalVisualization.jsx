@@ -87,14 +87,16 @@ export function FractalVisualization({ thoughts }) {
       .join("g")
       .attr("transform", d => {
         if (!checkNodeAuthorization(d)) {
-          console.warn('Unauthorized access attempt to node:', d.data.name);
+          console.warn('Unauthorized access attempt to node:', encodeURIComponent(d.data.name));
           return "translate(0,0)";
         }
         return `translate(${d.x},${d.y})`;
       })
       .on("click", (event, d) => {
+        console.log('Click event:', event);
+        console.log('Node data:', d.data);
         if (!checkNodeAuthorization(d)) {
-          console.warn('Unauthorized click attempt on node:', d.data.name);
+          console.warn('Unauthorized click attempt on node:', encodeURIComponent(d.data.name));
           event.preventDefault();
           return;
         }
@@ -104,35 +106,89 @@ export function FractalVisualization({ thoughts }) {
     
     // Add circles with different styling based on depth and authorization
     node.append("circle")
-      .attr("r", d => {
+      .attr("r", d => {   
         if (!checkNodeAuthorization(d)) {
           return 0;
         }
         return d.r;
       })
-      .attr("fill", d => {
+      .attr("fill", d => { 
         if (!checkNodeAuthorization(d)) {
           return "transparent";
         }
-        return d.data.color || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#f5f5f5" : "#e0e0e0");
+        if (!d.data.authorized) {
+          return "#ff0000";
+        }
+        // Enhanced authorization check with role-based access control
+        const isAuthorized = checkNodeAuthorization(d);
+        if (!isAuthorized) {
+          return "transparent";
+        }
+        
+        // Role-based color assignment
+        const userRole = user?.role || 'default';
+        const roleColors = {
+          'admin': '#4CAF50',
+          'therapist': '#2196F3',
+          'client': '#FFC107',
+          'default': '#f5f5f5'
+        };
+        
+        return d.data.color || roleColors[userRole] || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#f5f5f5" : "#e0e0e0");
       })
       .attr("stroke", d => {
-        if (!checkNodeAuthorization(d)) {
+        const isAuthorized = checkNodeAuthorization(d);
+        if (!isAuthorized) {
           return "transparent";
         }
-        return d.depth === 0 ? "transparent" : d.depth === 1 ? "#333" : d.data.color || "#666";
+        
+        // Role-based stroke color
+        const userRole = user?.role || 'default';
+        const roleStrokeColors = {
+          'admin': '#2E7D32',
+          'therapist': '#1565C0',
+          'client': '#FFA000',
+          'default': '#333'
+        };
+        
+        return d.depth === 0 ? "transparent" : d.depth === 1 ? roleStrokeColors[userRole] || "#333" : d.data.color || "#666";
       })
       .attr("stroke-width", d => {
-        if (!checkNodeAuthorization(d)) {
+        const isAuthorized = checkNodeAuthorization(d);
+        if (!isAuthorized) {
           return 0;
         }
-        return d.depth === 0 ? 0 : 2;
+        
+        // Role-based stroke width
+        const userRole = user?.role || 'default';
+        const roleStrokeWidths = {
+          'admin': 3,
+          'therapist': 2,
+          'client': 1,
+          'default': 2
+        };
+        
+        return d.depth === 0 ? 0 : roleStrokeWidths[userRole] || 2;
+        };
+        
+        return d.depth === 0 ? 0 : roleStrokeWidths[userRole] || 2;
       })
       .attr("fill-opacity", d => {
-        if (!checkNodeAuthorization(d)) {
+        const isAuthorized = checkNodeAuthorization(d);
+        if (!isAuthorized) {
           return 0;
         }
-        return 1 - d.depth * 0.2;
+        
+        // Role-based opacity
+        const userRole = user?.role || 'default';
+        const roleOpacities = {
+          'admin': 1,
+          'therapist': 0.8,
+          'client': 0.6,
+          'default': 0.7
+        };
+        
+        return roleOpacities[userRole] * (1 - d.depth * 0.2);
       });
     
     // Add labels for nodes with authorization check
@@ -145,8 +201,7 @@ export function FractalVisualization({ thoughts }) {
       .append("text")
       .attr("dy", d => d.depth === 0 ? "-0.5em" : "0.3em")
       .attr("text-anchor", "middle")
-      .attr("font-size", d => Math.max(8, 18 - d.depth * 4))
-      .attr("fill", "#333")
+      .attr("font-size", d => Math.max(8, 18 - d.depth * 4)) 
       .text(d => d.data.name?.substring(0, Math.max(3, 20 - d.depth * 5)));
     
     // Add fractal patterns for connected thought processes with authorization
@@ -156,7 +211,7 @@ export function FractalVisualization({ thoughts }) {
       .selectAll("path")
       .data(root.links().filter(d => d.source.depth < 2 && checkNodeAuthorization(d.source) && checkNodeAuthorization(d.target)))
       .join("path")
-      .attr("d", d => { 
+      .attr("d", d => {   
         const sourceX = d.source.x + margin.left;
         const sourceY = d.source.y + margin.top;
         const targetX = d.target.x + margin.left;
@@ -167,13 +222,13 @@ export function FractalVisualization({ thoughts }) {
                  ${targetX},${(sourceY + targetY) / 2}
                  ${targetX},${targetY}`;
       })
-      .attr("stroke", d => d.target.data.color || "#fff")
-      .attr("stroke-width", d => Math.max(1, 3 - d.source.depth));
+      .attr("stroke", d => d.target.data.color || "#fff") 
+      .attr("stroke-width", d => Math.max(1, 3 - d.source.depth));    
     
     // Zoom functionality
     const zoom = d3.zoom()
       .scaleExtent([0.5, 5])
-      .on("zoom", (event) => {
+      .on("zoom", (event) => { 
         g.attr("transform", event.transform);
       });
     
@@ -188,7 +243,7 @@ export function FractalVisualization({ thoughts }) {
   if (!user) {
     return (
       <Box sx={{ p: 3, textAlign: 'center' }}>
-        <Typography variant="h6">Please log in to view the visualization</Typography>
+        <Typography variant="h6">{t('visualization.loginRequired', 'Please log in to view the visualization')}</Typography>
       </Box>
     );
   }
@@ -248,7 +303,7 @@ export function FractalVisualization({ thoughts }) {
             {selectedNode.data.emergentPattern && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.emergentPattern.color }}>
-                  Emergent Pattern (new z):
+                  {t('emergentPattern', 'Emergent Pattern (new z):')}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {selectedNode.data.emergentPattern}
@@ -259,7 +314,7 @@ export function FractalVisualization({ thoughts }) {
             {selectedNode.data.metaAwareness && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.metaAwareness.color }}>
-                  Meta-Awareness:
+                  {t('metaAwareness', 'Meta-Awareness:')}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {selectedNode.data.metaAwareness}

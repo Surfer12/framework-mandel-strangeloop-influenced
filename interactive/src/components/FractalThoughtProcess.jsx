@@ -116,7 +116,7 @@ export function FractalThoughtProcess({ onSave }) {
         {currentStep === 'transformativeInput' && (
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle2" sx={{ mb: 1 }}>
-              Select Therapeutic Anchor:
+              {t('selectTherapeuticAnchor')} {/* import { useTranslation } from 'react-i18next'; */}
             </Typography>
             <FormControl fullWidth>
               <Select
@@ -129,7 +129,7 @@ export function FractalThoughtProcess({ onSave }) {
                     <MenuItem key={key} value={key}>
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <AnchorIcon />
-                        <Typography>{anchor.name}</Typography>
+                        <Typography>{t(anchor.name)}</Typography>
                       </Box>
                     </MenuItem>
                   );
@@ -142,7 +142,7 @@ export function FractalThoughtProcess({ onSave }) {
         {currentStep === 'metaAwareness' && (
           <Box sx={{ mb: 3 }}>
             <Typography variant="subtitle2" sx={{ mb: 1 }}>
-              Processing Level:
+              {t('metaAwareness.processingLevel', 'Processing Level:')}
             </Typography>
             <RadioGroup
               row
@@ -176,7 +176,7 @@ export function FractalThoughtProcess({ onSave }) {
             disabled={activeStep === 0}
             startIcon={<ArrowBackIcon />}
           >
-            Back
+            {t('button.back', 'Back')}
           </Button>
           <Button 
             variant="contained" 

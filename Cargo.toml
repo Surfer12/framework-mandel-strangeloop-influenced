@@ -4,31 +4,31 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-async-trait = "0.1"
-anyhow = "1.0"
-log = "0.4"
-serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "1.0", features = ["full"] }
-serde_json = "1.0"
-thiserror = "1.0"
-uuid = { version = "1.0", features = ["v4"] }
-chrono = { version = "0.4", features = ["serde"] }
-env_logger = "0.10"
+async-trait = "0.1.88"
+anyhow = "1.0.97"
+log = "0.4.27"
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.44.1", features = ["full"] }
+serde_json = "1.0.140"
+thiserror = "1.0.69"
+uuid = { version = "1.16.0", features = ["v4"] }
+chrono = { version = "0.4.40", features = ["serde"] }
+env_logger = "0.10.2"
 
 [dev-dependencies]
-tokio = { version = "1.0", features = ["full"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-reqwest = { version = "0.11", features = ["json"] }
-futures = "0.3"
-anyhow = "1.0"
-async-trait = "0.1"
-thiserror = "1.0"
-log = "0.4"
-env_logger = "0.10"
-dotenv = "0.15"
-uuid = { version = "1.0", features = ["v4"] }
-chrono = { version = "0.4", features = ["serde"] }
+tokio = { version = "1.44.1", features = ["full"] }
+serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
+reqwest = { version = "0.11.27", features = ["json"] }
+futures = "0.3.31"
+anyhow = "1.0.97"
+async-trait = "0.1.88"
+thiserror = "1.0.69"
+log = "0.4.27"
+env_logger = "0.10.2"
+dotenv = "0.15.0"
+uuid = { version = "1.16.0", features = ["v4"] }
+chrono = { version = "0.4.40", features = ["serde"] }
 
 [lib]
 name = "framework_mandel_strangeloop_influenced"

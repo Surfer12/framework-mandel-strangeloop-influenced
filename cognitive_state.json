@@ -1,0 +1,18 @@
+{
+  "root_node": {
+    "id": "root",
+    "content": "Initial cognitive root",
+    "depth": 0,
+    "children": [],
+    "metadata": {
+      "confidence": 1.0,
+      "source": "system",
+      "timestamp": 1744181535,
+      "tags": [
+        "root"
+      ]
+    }
+  },
+  "max_depth": 5,
+  "processing_queue": []
+}

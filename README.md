@@ -18,11 +18,11 @@ lua mandelbrot.lua
 ## Parameters
 
 The script includes the following default parameters:
-- Width: 800 pixels
-- Height: 600 pixels
-- X range: -2.5 to 1.5
-- Y range: -1.5 to 1.5
-- Maximum iterations: 1000
+- Width: 80 characters 
+- Height: 40 characters
+- X range: -2.0 to 1.0
+- Y range: -1.0 to 1.0
+- Maximum iterations: 100
 
 ## License
 

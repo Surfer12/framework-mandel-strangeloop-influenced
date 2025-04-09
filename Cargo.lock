@@ -261,7 +261,7 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
- "tokio",
+ "tokio", # use = { version = "1.0", features = ["full"] }
  "uuid",
 ]
 
@@ -760,10 +760,10 @@ checksum = "87de3442987e9dbec73158d5c715e7ad9072fda936bb03d19d7fa10e00520f0e"
 dependencies = [
  "libc",
  "log",
- "openssl",
- "openssl-probe",
- "openssl-sys",
- "schannel",
+ "openssl 0.10.72",
+ "openssl-probe 0.1.5",
+ "openssl-sys 0.9.102",
+ "schannel 0.1.24",
  "security-framework",
  "security-framework-sys",
  "tempfile",
