@@ -5,7 +5,7 @@ use dotenv::dotenv;
 use std::path::Path;
 
 #[tokio::main]
-async fn main() -> Result<()> {
+async fn main() -> Result<()> {       
     // Load environment variables from .env file
     dotenv().ok();
     
