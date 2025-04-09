@@ -29,7 +29,7 @@ where
 
 // Custom serialization for Vec<Arc<CognitiveNode>>
 fn serialize_vec_arc_cognitive_node<S>(
-    nodes: &Vec<Arc<CognitiveNode>>,
+    nodes: &[Arc<CognitiveNode>],
     serializer: S,
 ) -> Result<S::Ok, S::Error>
 where
@@ -84,6 +84,12 @@ pub struct CognitiveAnthropicManager {
         deserialize_with = "deserialize_vec_arc_cognitive_node"
     )]
     processing_queue: Vec<Arc<CognitiveNode>>,
+}
+
+impl Default for CognitiveAnthropicManager {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl CognitiveAnthropicManager {
