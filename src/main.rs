@@ -1,70 +1,37 @@
 use anyhow::Result;
-use async_trait::async_trait;
 use log::info;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use framework_mandel_strangeloop_influenced::cognitive_anthropic_manager::{CognitiveAnthropicManager, CognitiveNode, AnthropicManager, CognitiveMetadata};
 use std::sync::Arc;
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct CognitiveNode {
-    pub id: u32,
-    pub info: String,
-}
-
-#[async_trait]
-pub trait AnthropicManager: Send + Sync {
-    async fn process(&self) -> Result<()>;
-    async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>>;
-}
-
-pub struct MyAnthropicManager;
-
-#[async_trait]
-impl AnthropicManager for MyAnthropicManager {
-    async fn process(&self) -> Result<()> {
-        info!("Starting cognitive processing");
-        // Simulated async work (you can replace with actual logic)
-        Ok(())
-    }
-
-    async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>> {
-        info!("Analyzing input: {}", input);
-        // Simulated analysis returning a dummy node
-        Ok(vec![CognitiveNode {
-            id: 1,
-            info: format!("Processed: {}", input),
-        }])
-    }
-}
-
-// Implement serialization for Arc<CognitiveNode>
-impl Serialize for Arc<CognitiveNode> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        (**self).serialize(serializer)
-    }
-}
-
-impl<'de> Deserialize<'de> for Arc<CognitiveNode> {
-    fn deserialize<D>(deserializer: D) -> Result<Arc<CognitiveNode>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let node = CognitiveNode::deserialize(deserializer)?;
-        Ok(Arc::new(node))
-    }
-}
+use std::path::Path;
+use chrono::Utc;
 
 #[tokio::main]
 async fn main() -> Result<()> {
     env_logger::init(); // Initialize logger if you want to see info logs
-    let manager = MyAnthropicManager;
-
+    
+    // Create a new CognitiveAnthropicManager
+    let mut manager = CognitiveAnthropicManager::new();
+    
+    // Add a node
+    manager.add_node("root", "Sample node content".to_string(), CognitiveMetadata {
+        confidence: 0.9,
+        source: "user".to_string(),
+        timestamp: Utc::now().timestamp(),
+        tags: vec!["sample".to_string()],
+    })?;
+    
+    // Process with the manager
     manager.process().await?;
-    let nodes = manager.analyze("Hello World").await?;
-    println!("Analysis Result: {:?}", nodes);
-
+    
+    // Export the node tree
+    let tree_json = manager.export_node_tree()?;
+    println!("Node Tree: {}", tree_json);
+    
+    // Save to file
+    let path = Path::new("cognitive_state.json");
+    manager.save_to_file(&path)?;
+    println!("Saved cognitive state to {:?}", path);
+    
     Ok(())
 }
 
@@ -74,15 +41,22 @@ mod tests {
 
     #[tokio::test]
     async fn test_anthropic_manager() -> Result<()> {
-        let manager = MyAnthropicManager;
+        let mut manager = CognitiveAnthropicManager::new();
 
         // Test process method
         manager.process().await?;
 
-        // Test analyze method
-        let nodes = manager.analyze("Test input").await?;
-        assert!(!nodes.is_empty(), "Expected at least one CognitiveNode");
-        assert_eq!(nodes[0].id, 1, "Expected CognitiveNode id to be 1");
+        // Test node manipulation
+        manager.add_node("root", "Test content".to_string(), CognitiveMetadata {
+            confidence: 0.8,
+            source: "test".to_string(),
+            timestamp: Utc::now().timestamp(),
+            tags: vec!["test".to_string()],
+        })?;
+        
+        // Test that export works
+        let tree_json = manager.export_node_tree()?;
+        assert!(!tree_json.is_empty(), "Expected non-empty tree JSON");
 
         Ok(())
     }

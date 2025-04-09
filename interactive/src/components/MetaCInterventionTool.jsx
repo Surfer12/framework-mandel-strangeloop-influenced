@@ -108,9 +108,8 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
           }
         }}
       >
-        Create Meta-C Intervention
+        {t('metaC.createIntervention')}
       </Button>
-      
       <Dialog 
         open={open} 
         onClose={() => setOpen(false)}
@@ -129,7 +128,7 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
           </DialogContentText>
           
           <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel>Intervention Type</InputLabel>
+            <InputLabel>{t('metaC.interventionType')}</InputLabel>
             <Select
               value={intervention.type}
               onChange={(e) => setIntervention({ ...intervention, type: e.target.value })}
@@ -152,7 +151,7 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
             fullWidth
             multiline
             rows={4}
-            label="Intervention Content"
+            label={t('interventionContent')} // import { useTranslation } from 'react-i18next';
             placeholder={currentType.prompt}
             value={intervention.content}
             onChange={(e) => setIntervention({ ...intervention, content: e.target.value })}
@@ -160,7 +159,7 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
           />
           
           <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel>Processing Level</InputLabel>
+            <InputLabel>{t('processingLevel')}</InputLabel>
             <Select
               value={intervention.processingLevel}
               onChange={(e) => setIntervention({ ...intervention, processingLevel: e.target.value })}
@@ -180,17 +179,17 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
           </FormControl>
           
           <FormControl fullWidth sx={{ mb: 3 }}>
-            <InputLabel>Target Thought (Optional)</InputLabel>
+            <InputLabel>{t('targetThoughtOptional')}</InputLabel> {/* import { useTranslation } from 'react-i18next'; */}
             <Select
               value={intervention.targetThought || ""}
               onChange={(e) => setIntervention({ ...intervention, targetThought: e.target.value })}
             >
               <MenuItem value="">
-                <em>None (General Intervention)</em>
+                <em>{t('noneGeneralIntervention')}</em>
               </MenuItem>
               {thoughts.map((thought) => (
                 <MenuItem key={thought.timestamp} value={thought.timestamp}>
-                  {thought.initialState?.substring(0, 50) || "Untitled Thought"}
+                  {thought.initialState?.substring(0, 50) || t('untitledThought')}
                 </MenuItem>
               ))}
             </Select>
@@ -198,13 +197,13 @@ export function MetaCInterventionTool({ thoughts, onSaveIntervention }) {
         </DialogContent>
         
         <DialogActions sx={{ backgroundColor: "#fff", p: 2 }}>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={() => setOpen(false)}>{t('cancel')}</Button>
           <Button 
             variant="contained" 
             onClick={handleSubmit}
             sx={{ backgroundColor: currentType.color }}
           >
-            Create Intervention
+            {t('metaC.createIntervention')}
           </Button>
         </DialogActions>
       </Dialog>

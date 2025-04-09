@@ -5,7 +5,7 @@ use std::sync::Arc;
 use log::{info, debug, error};
 use std::fs;
 use std::path::Path;
-use thiserror;
+use thiserror::Error;
 
 // Custom serialization for Arc<CognitiveNode>
 fn serialize_arc_cognitive_node<S>(node: &Arc<CognitiveNode>, serializer: S) -> Result<S::Ok, S::Error>
@@ -154,7 +154,8 @@ impl CognitiveAnthropicManager {
     }
 
     pub fn export_node_tree(&self) -> Result<String> {
-        Ok(serde_json::to_string_pretty(&self.root_node)?)
+        // Dereference Arc<CognitiveNode> to CognitiveNode before serializing
+        Ok(serde_json::to_string_pretty(&(*self.root_node))?)
     }
 
     pub fn import_node_tree(&mut self, json: &str) -> Result<()> {
@@ -166,7 +167,7 @@ impl CognitiveAnthropicManager {
 }
 
 // Add error handling for serialization
-#[derive(thiserror::Error, Debug)]
+#[derive(Error, Debug)]
 pub enum CognitiveError {
     #[error("Serialization error: {0}")]
     SerializationError(#[from] serde_json::Error),
@@ -182,6 +183,7 @@ pub trait AnthropicManager: Send + Sync {
     async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>>;
 }
 
+#[async_trait]
 impl AnthropicManager for CognitiveAnthropicManager {
     async fn process(&self) -> Result<()> {
         info!("Starting cognitive processing");
@@ -196,23 +198,6 @@ impl AnthropicManager for CognitiveAnthropicManager {
     }
 }
 
-// Implement Serialize for Arc<CognitiveNode>
-impl Serialize for Arc<CognitiveNode> {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        (**self).serialize(serializer)
-    }
-}
-
-// Implement Deserialize for Arc<CognitiveNode>
-impl<'de> Deserialize<'de> for Arc<CognitiveNode> {
-    fn deserialize<D>(deserializer: D) -> Result<Arc<CognitiveNode>, D::Error>
-    where
-        D: Deserializer<'de>,
-    {
-        let node = CognitiveNode::deserialize(deserializer)?;
-        Ok(Arc::new(node))
-    }
-} 
+// We don't need to implement Serialize and Deserialize for Arc<CognitiveNode>
+// since we're already using custom serialization/deserialization functions
+// The previous implementation caused orphan rule violations 

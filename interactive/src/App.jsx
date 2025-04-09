@@ -46,10 +46,10 @@ function App() {
   console.log('Current state:', { thoughts, interventions, view });
   
   const handleSaveThought = (newThought) => {
-    console.log('Saving new thought:', newThought);
+    console.log('Saving new thought:', encodeURIComponent(JSON.stringify(newThought))); // import encodeURIComponent
     setThoughts(prev => {
       const updatedThoughts = [...prev, newThought];
-      console.log('Updated thoughts:', updatedThoughts);
+      console.log('Updated thoughts:', encodeURIComponent(JSON.stringify(updatedThoughts)));
       return updatedThoughts;
     });
   };

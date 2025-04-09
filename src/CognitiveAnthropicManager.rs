@@ -12,7 +12,7 @@ use tokio::sync::broadcast;
 // Core Cognitive Framework
 
 /// Represents different scales for pattern analysis
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize)]
 pub enum Scale {
     Micro,  // Individual words, elements
     Meso,   // Relationships, patterns
@@ -21,7 +21,7 @@ pub enum Scale {
 }
 
 /// Represents a bifurcation point where small changes can create significant divergence
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct BifurcationPoint {
     pub description: String,
     pub location: (CognitiveLayer, usize), // Layer and iteration where detected
@@ -32,7 +32,7 @@ pub struct BifurcationPoint {
 }
 
 /// Represents a potential outcome branch from a bifurcation point
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct BranchOutcome {
     pub description: String,
     pub probability: f64,
@@ -41,7 +41,7 @@ pub struct BranchOutcome {
 }
 
 /// Tracks self-similar patterns across different scales
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct SelfSimilarPattern {
     pub core_pattern: String,
     pub micro_manifestations: Vec<String>,
@@ -52,7 +52,7 @@ pub struct SelfSimilarPattern {
 }
 
 /// Tracks the edge of chaos dynamics
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ChaosEdgeMetrics {
     pub rigidity_score: f64,        // 0.0 (completely rigid) to 1.0 (optimal structure)
     pub chaos_score: f64,           // 0.0 (optimal novelty) to 1.0 (complete chaos)
@@ -62,7 +62,7 @@ pub struct ChaosEdgeMetrics {
 }
 
 /// Tracks convergence of iterative processes
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ConvergenceMetrics {
     pub iterations_completed: usize,
     pub change_rate: f64,           // Rate of change between iterations
@@ -71,7 +71,7 @@ pub struct ConvergenceMetrics {
     pub convergence_status: ConvergenceStatus,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq, Serialize)]
 pub enum ConvergenceStatus {
     Diverging,       // Moving away from stable solution
     SlowlyConverging, // Converging but at a slow rate
@@ -81,7 +81,7 @@ pub enum ConvergenceStatus {
 }
 
 /// Manages metrics for scale invariance analysis
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ScaleInvarianceMetrics {
     pub patterns_by_scale: HashMap<Scale, Vec<Pattern>>,
     pub cross_scale_similarities: Vec<SelfSimilarPattern>,
@@ -89,7 +89,7 @@ pub struct ScaleInvarianceMetrics {
 }
 
 /// Report on scale invariance analysis
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ScaleInvarianceReport {
     pub self_similar_patterns: Vec<SelfSimilarPattern>,
     pub scale_invariance_coefficient: f64,
@@ -97,7 +97,7 @@ pub struct ScaleInvarianceReport {
 }
 
 /// Tracks recursive feedback loops
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct RecursiveFeedbackTracker {
     pub feedback_cycles: Vec<FeedbackCycle>,
     pub amplification_factors: HashMap<String, f64>,
@@ -105,7 +105,7 @@ pub struct RecursiveFeedbackTracker {
 }
 
 /// Represents a feedback cycle in the cognitive process
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct FeedbackCycle {
     pub origin_step: ProcessingStep,
     pub feedback_path: Vec<ProcessingStep>,
@@ -114,7 +114,7 @@ pub struct FeedbackCycle {
 }
 
 /// Tracks recursive feedback through the process
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct RecursiveFeedbackReport {
     pub feedback_cycles: Vec<FeedbackCycle>,
     pub stable_cycles: usize,
@@ -123,7 +123,7 @@ pub struct RecursiveFeedbackReport {
 }
 
 /// Monitors emergence of complex structures
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct EmergentComplexityMonitor {
     pub complexity_metrics: HashMap<String, f64>,
     pub emergent_properties: Vec<String>,
@@ -131,7 +131,7 @@ pub struct EmergentComplexityMonitor {
 }
 
 /// Reports on emergent complexity
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct EmergentComplexityReport {
     pub complexity_increase: f64,
     pub emergent_properties: Vec<String>,
@@ -139,7 +139,7 @@ pub struct EmergentComplexityReport {
 }
 
 /// Value for the c constant in Mandelbrot formula z = z² + c
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct CValue {
     pub content: String,
     pub source_tags: Vec<String>,
@@ -175,7 +175,7 @@ pub struct CognitiveAnthropicManager {
 }
 
 /// Controls iteration depth and convergence
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct IterationController {
     base_iterations: HashMap<CognitiveLayer, usize>,
     complexity_multiplier: f64,
@@ -278,7 +278,7 @@ pub struct FractalMathematicsFoundation {
 }
 
 /// Analyzes and manages bifurcation points
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct BifurcationAnalyzer {
     sensitivity_threshold: f64,
     detected_points: Vec<BifurcationPoint>,
@@ -286,7 +286,7 @@ pub struct BifurcationAnalyzer {
 }
 
 /// Manages the edge of chaos dynamics
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Serialize)]
 pub struct ChaosEdgeManager {
     rigidity_threshold: f64,
     chaos_threshold: f64,
@@ -823,4 +823,4 @@ impl CognitiveAnthropicManager {
             system: Some("You are operating as a reflective layer in a cognitive framework. Analyze the process and outputs of previous cognitive layers to generate meta-insights.".to_string()),
         };
 
-        let response = self.api_client.create_message(parameters).await?;
+        let response = self.api_client.create_message(parameters).await?

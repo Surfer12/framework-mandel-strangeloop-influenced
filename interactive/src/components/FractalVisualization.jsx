@@ -2,20 +2,35 @@ import React from 'react';
 import { Box, Card, CardContent, Typography, Chip } from '@mui/material';
 import * as d3 from 'd3';
 import { FRACTAL_FRAMEWORK, THERAPEUTIC_ANCHORS } from '../utils/framework';
+import { useAuth } from '../hooks/useAuth'; // Import auth hook
 
 export function FractalVisualization({ thoughts }) {
   const svgRef = React.useRef();
   const [selectedNode, setSelectedNode] = React.useState(null);
+  const { user, isAuthorized } = useAuth(); // Get auth context
+  
+  // Authorization check function
+  const checkNodeAuthorization = (node) => {
+    if (!user) return false;
+    
+    // Check if user has access to the thought's processing level
+    const processingLevel = node.data?.processingLevel || 'mesoLevel';
+    const userAccessLevels = user.accessLevels || [];
+    
+    return userAccessLevels.includes(processingLevel);
+  };
   
   React.useEffect(() => {
-    if (!thoughts.length || !svgRef.current) return;
+    if (!thoughts.length || !svgRef.current || !user) return;
     
     // Clear previous visualization
     d3.select(svgRef.current).selectAll("*").remove();
     
-    // Group thoughts by iteration series
+    // Group thoughts by iteration series with authorization check
     const iterationSeries = {};
     thoughts.forEach(thought => {
+      if (!checkNodeAuthorization({ data: thought })) return;
+      
       const seriesId = thought.seriesId || thought.timestamp;
       if (!iterationSeries[seriesId]) {
         iterationSeries[seriesId] = [];
@@ -23,7 +38,7 @@ export function FractalVisualization({ thoughts }) {
       iterationSeries[seriesId].push(thought);
     });
     
-    // Create hierarchical data structure
+    // Create hierarchical data structure with authorization
     const hierarchyData = {
       name: "Thought Patterns",
       children: Object.values(iterationSeries).map(series => ({
@@ -32,7 +47,8 @@ export function FractalVisualization({ thoughts }) {
           name: thought.initialState.substring(0, 30),
           value: 1,
           data: thought,
-          color: FRACTAL_FRAMEWORK[thought.processingLevel || "mesoLevel"].color
+          color: FRACTAL_FRAMEWORK[thought.processingLevel || "mesoLevel"].color,
+          authorized: checkNodeAuthorization({ data: thought })
         }))
       }))
     };
@@ -65,26 +81,67 @@ export function FractalVisualization({ thoughts }) {
     const g = svg.append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
     
-    // Add circles for each node
+    // Add circles for each node with enhanced authorization checks
     const node = g.selectAll("g")
       .data(root.descendants())
       .join("g")
-      .attr("transform", d => `translate(${d.x},${d.y})`)
+      .attr("transform", d => {
+        if (!checkNodeAuthorization(d)) {
+          console.warn('Unauthorized access attempt to node:', d.data.name);
+          return "translate(0,0)";
+        }
+        return `translate(${d.x},${d.y})`;
+      })
       .on("click", (event, d) => {
+        if (!checkNodeAuthorization(d)) {
+          console.warn('Unauthorized click attempt on node:', d.data.name);
+          event.preventDefault();
+          return;
+        }
         setSelectedNode(d.data);
         event.stopPropagation();
       });
     
-    // Add circles with different styling based on depth
+    // Add circles with different styling based on depth and authorization
     node.append("circle")
-      .attr("r", d => d.r)
-      .attr("fill", d => d.data.color || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#f5f5f5" : "#e0e0e0"))
-      .attr("stroke", d => d.depth === 0 ? "transparent" : d.depth === 1 ? "#333" : d.data.color || "#666")
-      .attr("stroke-width", d => d.depth === 0 ? 0 : 2)
-      .attr("fill-opacity", d => 1 - d.depth * 0.2);
+      .attr("r", d => {
+        if (!checkNodeAuthorization(d)) {
+          return 0;
+        }
+        return d.r;
+      })
+      .attr("fill", d => {
+        if (!checkNodeAuthorization(d)) {
+          return "transparent";
+        }
+        return d.data.color || (d.depth === 0 ? "transparent" : d.depth === 1 ? "#f5f5f5" : "#e0e0e0");
+      })
+      .attr("stroke", d => {
+        if (!checkNodeAuthorization(d)) {
+          return "transparent";
+        }
+        return d.depth === 0 ? "transparent" : d.depth === 1 ? "#333" : d.data.color || "#666";
+      })
+      .attr("stroke-width", d => {
+        if (!checkNodeAuthorization(d)) {
+          return 0;
+        }
+        return d.depth === 0 ? 0 : 2;
+      })
+      .attr("fill-opacity", d => {
+        if (!checkNodeAuthorization(d)) {
+          return 0;
+        }
+        return 1 - d.depth * 0.2;
+      });
     
-    // Add labels for nodes
-    node.filter(d => d.depth < 3)
+    // Add labels for nodes with authorization check
+    node.filter(d => {
+      if (!checkNodeAuthorization(d)) {
+        return false;
+      }
+      return d.depth < 3;
+    })
       .append("text")
       .attr("dy", d => d.depth === 0 ? "-0.5em" : "0.3em")
       .attr("text-anchor", "middle")
@@ -92,14 +149,14 @@ export function FractalVisualization({ thoughts }) {
       .attr("fill", "#333")
       .text(d => d.data.name?.substring(0, Math.max(3, 20 - d.depth * 5)));
     
-    // Add fractal patterns for connected thought processes
+    // Add fractal patterns for connected thought processes with authorization
     const links = svg.append("g")
       .attr("fill", "none")
       .attr("stroke-opacity", 0.4)
       .selectAll("path")
-      .data(root.links().filter(d => d.source.depth < 2))
+      .data(root.links().filter(d => d.source.depth < 2 && checkNodeAuthorization(d.source) && checkNodeAuthorization(d.target)))
       .join("path")
-      .attr("d", d => {
+      .attr("d", d => { 
         const sourceX = d.source.x + margin.left;
         const sourceY = d.source.y + margin.top;
         const targetX = d.target.x + margin.left;
@@ -126,7 +183,15 @@ export function FractalVisualization({ thoughts }) {
     return () => {
       svg.on(".zoom", null);
     };
-  }, [thoughts]);
+  }, [thoughts, user]);
+  
+  if (!user) {
+    return (
+      <Box sx={{ p: 3, textAlign: 'center' }}>
+        <Typography variant="h6">Please log in to view the visualization</Typography>
+      </Box>
+    );
+  }
   
   return (
     <Box sx={{ position: "relative", width: "100%", height: "600px", mt: 4 }}>
@@ -136,7 +201,7 @@ export function FractalVisualization({ thoughts }) {
         onClick={() => setSelectedNode(null)}
       />
       
-      {selectedNode && selectedNode.data && (
+      {selectedNode && selectedNode.data && checkNodeAuthorization({ data: selectedNode.data }) && (
         <Card sx={{ 
           position: "absolute", 
           top: 20, 
@@ -153,7 +218,7 @@ export function FractalVisualization({ thoughts }) {
             {selectedNode.data.recursiveElaboration && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.recursiveElaboration.color }}>
-                  Recursive Elaboration (z²):
+                  {t('recursiveElaboration')}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {selectedNode.data.recursiveElaboration}
@@ -164,7 +229,7 @@ export function FractalVisualization({ thoughts }) {
             {selectedNode.data.transformativeInput && (
               <Box sx={{ mt: 2 }}>
                 <Typography variant="subtitle2" sx={{ color: FRACTAL_FRAMEWORK.transformativeInput.color }}>
-                  Transformative Input (c):
+                  {t('transformativeInput')} {/* import { useTranslation } from 'react-i18next'; */}
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 0.5 }}>
                   {selectedNode.data.transformativeInput}
