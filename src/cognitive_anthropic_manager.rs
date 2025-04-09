@@ -1,14 +1,17 @@
 use anyhow::Result;
 use async_trait::async_trait;
-use serde::{Deserialize, Serialize, Serializer, Deserializer};
-use std::sync::Arc;
-use log::{info, debug, error};
+use log::{debug, error, info};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fs;
 use std::path::Path;
+use std::sync::Arc;
 use thiserror;
 
 // Custom serialization for Arc<CognitiveNode>
-fn serialize_arc_cognitive_node<S>(node: &Arc<CognitiveNode>, serializer: S) -> Result<S::Ok, S::Error>
+fn serialize_arc_cognitive_node<S>(
+    node: &Arc<CognitiveNode>,
+    serializer: S,
+) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
@@ -25,7 +28,10 @@ where
 }
 
 // Custom serialization for Vec<Arc<CognitiveNode>>
-fn serialize_vec_arc_cognitive_node<S>(nodes: &Vec<Arc<CognitiveNode>>, serializer: S) -> Result<S::Ok, S::Error>
+fn serialize_vec_arc_cognitive_node<S>(
+    nodes: &Vec<Arc<CognitiveNode>>,
+    serializer: S,
+) -> Result<S::Ok, S::Error>
 where
     S: Serializer,
 {
@@ -34,7 +40,9 @@ where
 }
 
 // Custom deserialization for Vec<Arc<CognitiveNode>>
-fn deserialize_vec_arc_cognitive_node<'de, D>(deserializer: D) -> Result<Vec<Arc<CognitiveNode>>, D::Error>
+fn deserialize_vec_arc_cognitive_node<'de, D>(
+    deserializer: D,
+) -> Result<Vec<Arc<CognitiveNode>>, D::Error>
 where
     D: Deserializer<'de>,
 {
@@ -47,7 +55,10 @@ pub struct CognitiveNode {
     pub id: String,
     pub content: String,
     pub depth: usize,
-    #[serde(serialize_with = "serialize_vec_arc_cognitive_node", deserialize_with = "deserialize_vec_arc_cognitive_node")]
+    #[serde(
+        serialize_with = "serialize_vec_arc_cognitive_node",
+        deserialize_with = "deserialize_vec_arc_cognitive_node"
+    )]
     pub children: Vec<Arc<CognitiveNode>>,
     pub metadata: CognitiveMetadata,
 }
@@ -62,10 +73,16 @@ pub struct CognitiveMetadata {
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct CognitiveAnthropicManager {
-    #[serde(serialize_with = "serialize_arc_cognitive_node", deserialize_with = "deserialize_arc_cognitive_node")]
+    #[serde(
+        serialize_with = "serialize_arc_cognitive_node",
+        deserialize_with = "deserialize_arc_cognitive_node"
+    )]
     root_node: Arc<CognitiveNode>,
     max_depth: usize,
-    #[serde(serialize_with = "serialize_vec_arc_cognitive_node", deserialize_with = "deserialize_vec_arc_cognitive_node")]
+    #[serde(
+        serialize_with = "serialize_vec_arc_cognitive_node",
+        deserialize_with = "deserialize_vec_arc_cognitive_node"
+    )]
     processing_queue: Vec<Arc<CognitiveNode>>,
 }
 
@@ -89,7 +106,12 @@ impl CognitiveAnthropicManager {
         }
     }
 
-    pub fn add_node(&mut self, _parent_id: &str, content: String, metadata: CognitiveMetadata) -> Result<()> {
+    pub fn add_node(
+        &mut self,
+        _parent_id: &str,
+        content: String,
+        metadata: CognitiveMetadata,
+    ) -> Result<()> {
         let new_node = Arc::new(CognitiveNode {
             id: uuid::Uuid::new_v4().to_string(),
             content,
@@ -112,11 +134,11 @@ impl CognitiveAnthropicManager {
 
     fn process_node(&mut self, node: Arc<CognitiveNode>) -> Result<()> {
         debug!("Processing node: {}", node.id);
-        
+
         // Implement recursive cognitive processing
         if node.depth < self.max_depth {
             let mut new_children = Vec::new();
-            
+
             // Generate child nodes through cognitive analysis
             for i in 0..3 {
                 let child = Arc::new(CognitiveNode {
@@ -135,7 +157,7 @@ impl CognitiveAnthropicManager {
                 self.processing_queue.push(child);
             }
         }
-        
+
         Ok(())
     }
 
@@ -154,7 +176,9 @@ impl CognitiveAnthropicManager {
     }
 
     pub fn export_node_tree(&self) -> Result<String> {
-        Ok(serde_json::to_string_pretty(&self.root_node)?)
+        // Wrap the Arc<CognitiveNode> in SerializableCognitiveNode to enable serialization
+        let serializable_node = SerializableCognitiveNode(self.root_node.clone());
+        Ok(serde_json::to_string_pretty(&serializable_node)?)
     }
 
     pub fn import_node_tree(&mut self, json: &str) -> Result<()> {
@@ -182,6 +206,7 @@ pub trait AnthropicManager: Send + Sync {
     async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>>;
 }
 
+#[async_trait]
 impl AnthropicManager for CognitiveAnthropicManager {
     async fn process(&self) -> Result<()> {
         info!("Starting cognitive processing");
@@ -196,23 +221,28 @@ impl AnthropicManager for CognitiveAnthropicManager {
     }
 }
 
-// Implement Serialize for Arc<CognitiveNode>
-impl Serialize for Arc<CognitiveNode> {
+// Create a newtype wrapper for Arc<CognitiveNode>
+#[derive(Debug, Clone)]
+pub struct SerializableCognitiveNode(pub Arc<CognitiveNode>);
+
+// Implement Serialize for the newtype
+impl Serialize for SerializableCognitiveNode {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
         S: Serializer,
     {
-        (**self).serialize(serializer)
+        let inner = &*self.0;
+        inner.serialize(serializer)
     }
 }
 
-// Implement Deserialize for Arc<CognitiveNode>
-impl<'de> Deserialize<'de> for Arc<CognitiveNode> {
-    fn deserialize<D>(deserializer: D) -> Result<Arc<CognitiveNode>, D::Error>
+// Implement Deserialize for the newtype
+impl<'de> Deserialize<'de> for SerializableCognitiveNode {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
         let node = CognitiveNode::deserialize(deserializer)?;
-        Ok(Arc::new(node))
+        Ok(SerializableCognitiveNode(Arc::new(node)))
     }
-} 
+}

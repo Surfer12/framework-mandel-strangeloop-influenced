@@ -1,5 +1,6 @@
 use anyhow::Result;
-use framework_mandel_strangeloop_influenced::{CognitiveAnthropicManager, CognitiveMetadata};
+use framework_mandel_strangeloop_influenced::CognitiveAnthropicManager;
+use framework_mandel_strangeloop_influenced::cognitive_anthropic_manager::{CognitiveMetadata, AnthropicManager};
 use log::info;
 use dotenv::dotenv;
 use std::path::Path;

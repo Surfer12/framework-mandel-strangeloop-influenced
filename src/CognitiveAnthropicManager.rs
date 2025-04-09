@@ -1,3 +1,61 @@
+// Define a newtype wrapper
+#[derive(Debug, Clone)]
+pub struct SerializableCognitiveNode(pub Arc<CognitiveNode>);
+
+// Implement Serialize for your newtype
+impl Serialize for SerializableCognitiveNode {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        // Either delegate to inner node's serialize implementation
+        // or implement custom serialization logic here
+        // For example:
+        let inner = &*self.0;
+        inner.serialize(serializer)
+    }
+}
+
+// Similarly for Deserialize
+impl<'de> Deserialize<'de> for SerializableCognitiveNode {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        // Deserialize into CognitiveNode and wrap in Arc
+        let node = CognitiveNode::deserialize(deserializer)?;
+        Ok(SerializableCognitiveNode(Arc::new(node)))
+    }
+}
+
+// Add conversion methods if needed
+impl SerializableCognitiveNode {
+    pub fn into_inner(self) -> Arc<CognitiveNode> {
+        self.0
+    }
+
+    pub fn from_arc(arc: Arc<CognitiveNode>) -> Self {
+        Self(arc)
+    }
+}
+use async_trait::async_trait;
+
+#[async_trait]
+pub trait AnthropicManager: Send + Sync {
+    async fn process(&self) -> Result<()>;
+    async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>>;
+}
+
+#[async_trait]
+impl AnthropicManager for YourCognitiveAnthropicManager {
+    async fn process(&self) -> Result<()> {
+        // Your implementation
+    }
+
+    async fn analyze(&self, input: &str) -> Result<Vec<CognitiveNode>> {
+        // Your implementation
+    }
+}
 use futures::Future;
 
 
